@@ -1,0 +1,16 @@
+{
+  "name": "Legal Timekeeper",
+  "short_name": "Timekeeper",
+  "description": "Voice and typed time entry for legal work, by J.T. Barnes & Associates, PLLC.",
+  "id": "/lab/timekeeper/app/",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F5EFE0",
+  "theme_color": "#1C1C1C",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
