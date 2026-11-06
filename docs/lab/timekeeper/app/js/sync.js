@@ -1,6 +1,6 @@
 /* Legal Timekeeper: OneDrive sync.
    One file, timekeeper-data.json, in the app's private folder of the signed-in user's own OneDrive
-   (Apps > Legal Timekeeper). The app can see only that folder. The firm never receives the data. */
+   (inside OneDrive > Apps, named after the Microsoft app registration). The app can see only that folder. The firm never receives the data. */
 import { CONFIG } from './config.js';
 import * as auth from './auth.js';
 import { mergeEntries, sameEntries } from './core.js';

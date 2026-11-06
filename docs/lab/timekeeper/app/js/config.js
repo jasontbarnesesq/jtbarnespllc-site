@@ -2,7 +2,7 @@
    CLIENT_ID comes from the Microsoft Entra app registration (see TIMEKEEPER.md at the repository root).
    Leave it blank and the app runs in on-device mode with sign-in hidden. */
 export const CONFIG = {
-  CLIENT_ID: '',
+  CLIENT_ID: 'cfc6cf5e-cfbf-45a4-969c-14481512cb69', // Entra app "MyLegalTimekeeper"
   // "common" lets any Microsoft account sign in: personal (Outlook.com) and work or school.
   AUTHORITY: 'https://login.microsoftonline.com/common',
   SCOPES: ['openid', 'profile', 'offline_access', 'Files.ReadWrite.AppFolder'],

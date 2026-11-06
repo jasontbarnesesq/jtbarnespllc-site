@@ -484,7 +484,7 @@ function renderSyncChip() {
   chip.className = 'sync-chip ' + cls;
   $('syncText').textContent = text;
   chip.title = syncState.message || '';
-  $('footSync').textContent = acct ? ' and in your OneDrive (Apps > Legal Timekeeper)' : '';
+  $('footSync').textContent = acct ? ' and in your OneDrive (in the Apps folder)' : '';
 }
 function renderAccount() {
   const acct = auth.account();
@@ -497,7 +497,7 @@ function renderAccount() {
   $('signOutBtn').hidden = !acct;
   const m = sync.meta();
   $('acctText').textContent = acct
-    ? `Signed in as ${acct.name || acct.username}${acct.username && acct.name ? ` (${acct.username})` : ''}. Entries sync to a private folder in your OneDrive: Apps > Legal Timekeeper.${m.at ? ` Last synced ${new Date(m.at).toLocaleString()}.` : ''}${syncState.message ? ' ' + syncState.message : ''}`
+    ? `Signed in as ${acct.name || acct.username}${acct.username && acct.name ? ` (${acct.username})` : ''}. Entries sync to a private app folder in your OneDrive, inside the Apps folder.${m.at ? ` Last synced ${new Date(m.at).toLocaleString()}.` : ''}${syncState.message ? ' ' + syncState.message : ''}`
     : 'Entries are saved only on this device. Sign in with a personal or work Microsoft account to back them up to your own OneDrive and use them on your other devices. The firm never receives your entries.';
 }
 
