@@ -314,6 +314,7 @@ def footer():
           <li><a href="/lab/">Practice Tools</a></li>
           <li><a href="/lab/timekeeper/">Legal Timekeeper</a></li>
           <li><a href="/lab/minder/">Legal Minder</a></li>
+          <li><a href="/lab/prompt-coach/">Legal Prompt Coach</a></li>
         </ul>
       </div>
       <div>
@@ -569,7 +570,7 @@ def build_home():
     <div class="grid-3">
       <a class="card" href="/insights/"><span class="status status-soon">Insights</span><h3>Writing on private capital</h3><p>Analysis of private funds, securities offerings, family office trends, and the economics of professional work.</p><span class="text-link">Read</span></a>
       <a class="card" href="/newsletter/"><span class="status status-live">Weekly</span><h3>Securities Compliance Weekly</h3><p>Regulatory developments and market trends for fund managers, advisers, and family offices.</p><span class="text-link">Subscribe</span></a>
-      <a class="card" href="/lab/"><span class="status status-dev">Tools</span><h3>Practice tools</h3><p>The Legal Timekeeper, Legal Minder, and the systems behind a technology-enabled practice.</p><span class="text-link">Explore the Lab</span></a>
+      <a class="card" href="/lab/"><span class="status status-dev">Tools</span><h3>Practice tools</h3><p>The Legal Timekeeper, Legal Minder, Legal Prompt Coach, and the systems behind a technology-enabled practice.</p><span class="text-link">Explore the Lab</span></a>
     </div>
   </div>
 </section>
@@ -905,9 +906,10 @@ def build_lab():
     body += f'''
 <section class="section">
   <div class="wrap">
-    <div class="grid-3">
+    <div class="grid-2">
       <a class="card" href="/lab/timekeeper/"><span class="status status-live">In use</span><h3>Legal Timekeeper</h3><p>Matter-tagged time capture and reporting designed around how legal work is actually interrupted, resumed, and billed.</p><span class="text-link">Learn more</span></a>
       <a class="card" href="/lab/minder/"><span class="status status-dev">In development</span><h3>Legal Minder</h3><p>Natural-language scheduling that turns &ldquo;call the sponsor Tuesday at two&rdquo; into structured calendar entries for iOS and Outlook.</p><span class="text-link">Learn more</span></a>
+      <a class="card" href="/lab/prompt-coach/"><span class="status status-live">In use</span><h3>Legal Prompt Coach</h3><p>A browser extension for Edge and Chrome that scores AI prompts as you type and builds them out into complete, lawyer-grade instructions for Claude, ChatGPT, Copilot, and more.</p><span class="text-link">Learn more</span></a>
       <a class="card" href="/newsletter/"><span class="status status-live">Weekly</span><h3>Intelligence pipeline</h3><p>An automated feed that gathers, scores, and summarizes regulatory and market news, and powers Securities Compliance Weekly.</p><span class="text-link">See the output</span></a>
     </div>
   </div>
@@ -930,7 +932,7 @@ def build_lab():
   </div>
 </section>'''
     page("/lab/", "The Lab: Practice Tools",
-         "Practice tools built by a securities lawyer: the Legal Timekeeper, Legal Minder, and an automated regulatory intelligence pipeline.",
+         "Practice tools built by a securities lawyer: the Legal Timekeeper, Legal Minder, Legal Prompt Coach, and an automated regulatory intelligence pipeline.",
          body, zone="lab")
 
     # Timekeeper
@@ -1006,6 +1008,49 @@ def build_lab():
 </section>'''
     page("/lab/minder/", "Legal Minder",
          "Legal Minder: natural-language calendar and deadline management for legal practices, exporting to iOS and Outlook.",
+         body, zone="lab")
+
+    # Prompt Coach
+    body = lab_hero([("Home", "/"), ("The Lab", "/lab/"), ("Legal Prompt Coach", None)], "The Lab &middot; In use",
+                    "Legal Prompt <em>Coach</em>",
+                    "A browser extension that coaches AI prompts for legal work as you write them, then builds them out into complete instructions before you press send.")
+    body += f'''
+<section class="section">
+  <div class="wrap split">
+    <div>
+      <p>The quality of an AI answer depends on the quality of the request. Most prompts for legal work leave out the facts a lawyer would never leave out: whose side you represent, which document and sections are in scope, what standard applies, and what the output should look like. The Prompt Coach catches those gaps while you type.</p>
+      <p>Draft in your own words in the AI tool you already use. A small score indicator sits beside the prompt box, rates the draft from 0 to 100, names the missing pieces, and with one click rebuilds the draft into a full prompt: the method for the task, your instructions, the missing parameters as fill-in fields, quality controls, and a place for your source material.</p>
+      <ul class="check-list">
+        <li>Works inside Claude, ChatGPT, Gemini, Microsoft Copilot, Microsoft 365 Copilot, Perplexity, and Meta AI</li>
+        <li>Nine profiles and more than 100 task scenarios, from drafting and document review to regulatory filings, disputes, client letters, and practice operations</li>
+        <li>Texas attorney advertising guardrails built into every marketing and business development prompt</li>
+        <li>A side panel builder for longer prompts, plus right-click coaching for text on any page</li>
+        <li>Scoring and building run locally in the browser; the optional Deep Coach sends a draft to Claude only when you click it, using your own API key</li>
+      </ul>
+      <p class="mt-sm"><a class="btn btn-teal" href="mailto:{SITE["email"]}?subject=Legal%20Prompt%20Coach">Request a copy</a></p>
+      <p class="small mt-sm">For Microsoft Edge and Google Chrome. The Prompt Coach improves how a request is written; it does not review the answer, and every output still needs a lawyer&rsquo;s judgment. Do not enter confidential client information into an AI tool your engagement terms do not permit.</p>
+    </div>
+    <div class="mock" role="img" aria-label="Sample Legal Prompt Coach session scoring a short document review prompt at 58, listing three gaps, and rebuilding it to a score of 91">
+      <div class="mock-bar"><span></span><span></span><span></span><em>Legal Prompt Coach &middot; sample data</em></div>
+      <div class="mock-body">
+        <div class="bubble user"><small>Your draft</small>Review the Sample Fund I LPA and flag missing LP protections.</div>
+        <div class="bubble"><small>Coach &middot; Legal Review</small>
+          <div class="mock-row"><div>Prompt score<small>Below the 70 threshold for legal work</small></div><b>58</b></div>
+          <div class="event">
+            <div><span>Gap</span>Whose side you represent</div>
+            <div><span>Gap</span>Articles and sections in scope</div>
+            <div><span>Gap</span>Output format for findings</div>
+          </div>
+        </div>
+        <div class="bubble"><small>Build full prompt</small>Acting as counsel to [prospective limited partner], review Articles [__] of the Sample Fund I LPA against market LP protections. Report material gaps only, in a findings table with section, issue, risk, and proposed language. Do not speculate beyond the document.
+          <div class="mock-total">Rebuilt score <b>91</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>'''
+    page("/lab/prompt-coach/", "Legal Prompt Coach",
+         "Legal Prompt Coach: a browser extension for Edge and Chrome that scores and builds AI prompts for legal drafting, review, research, and practice operations.",
          body, zone="lab")
 
 
