@@ -39,10 +39,10 @@ SITE = {
     "locality": "Dallas",
     "region": "TX",
     "linkedin": "https://www.linkedin.com/in/jasontbarnes/",
-    "timekeeper_url": "https://jasontbarnes.com/mylegaltimekeeper/",
+    "timekeeper_url": "/lab/timekeeper/app/",
     # Optional booking link (Calendly, Microsoft Bookings, etc.). Blank = route to /contact/
     "scheduling_url": "",
-    "updated": "2026-10-15",
+    "updated": "2026-11-06",
 }
 
 # ---------------------------------------------------------------------------
@@ -944,14 +944,16 @@ def build_lab():
   <div class="wrap split">
     <div>
       <p>Most time-tracking software assumes you work on one thing at a time in neat blocks. Legal work does not fit that model: calls interrupt drafting, emails arrive mid-review, and deadlines move. The Timekeeper was built for that reality.</p>
+      <p>Say or type who the work was for, the matter, and what you did. The Timekeeper asks for anything missing, rounds the time to your billing increment, and keeps a running total for the day.</p>
       <ul class="check-list">
-        <li>Fast time entry with matter tagging</li>
-        <li>Daily, weekly, and monthly reporting</li>
-        <li>Plain-language narratives ready for billing review</li>
-        <li>Export for billing systems</li>
-        <li>No subscription required</li>
+        <li>Speak an entry or type it, with clients and matters suggested from your past entries</li>
+        <li>Time recorded in tenths of an hour or quarter hours, rounded the way you bill</li>
+        <li>Browse any past day, then export a day, week, month, or custom period as CSV or text</li>
+        <li>Optional Microsoft sign-in keeps entries in sync across your devices through your own OneDrive</li>
+        <li>Works offline and installs to a phone home screen; no subscription required</li>
       </ul>
-      <p class="mt-sm"><a class="btn btn-teal" href="{SITE["timekeeper_url"]}" rel="noopener">Open the Timekeeper</a></p>
+      <p class="mt-sm"><a class="btn btn-teal" href="{SITE["timekeeper_url"]}">Open the Timekeeper</a></p>
+      <p class="small mt-sm">Entries stay on your device and, if you sign in, in a private folder of your own OneDrive. The firm does not receive or store them.</p>
     </div>
     <div class="mock" role="img" aria-label="Sample Legal Timekeeper screen showing four time entries totaling 8.5 hours">
       <div class="mock-bar"><span></span><span></span><span></span><em>Legal Timekeeper &middot; sample data</em></div>
@@ -1100,6 +1102,9 @@ def build_legal():
     <p>When you use the contact form or the newsletter form, your email program opens a pre-filled message to the firm, or the information is sent to a form or newsletter provider the firm uses for that purpose. The firm uses this information only to respond to you, check for conflicts, and send the newsletter if you asked for it. The firm does not sell personal information.</p>
     <h2>Server logs</h2>
     <p>Like all websites, this site&rsquo;s hosting provider automatically processes technical information such as IP addresses and browser type to deliver pages and keep the service secure. The firm does not use that information to identify visitors.</p>
+    <h2>Legal Timekeeper</h2>
+    <p>The Legal Timekeeper in the Lab stores time entries in your browser on your own device. If you choose to sign in with a Microsoft account, the app also saves your entries to a private app folder in your own OneDrive (Apps &gt; Legal Timekeeper) so they stay in sync across your devices. The app asks Microsoft only for permission to read and write that one folder. Sign-in and storage are handled by Microsoft under its own privacy terms. Your entries go directly between your browser and Microsoft; the firm does not receive, store, or have access to them. You can sign out at any time, and you can remove the app&rsquo;s access from your Microsoft account settings.</p>
+    <p>Voice entry uses the speech recognition built into your browser. Depending on your browser, the audio may be processed by your browser&rsquo;s provider (for example, Google for Chrome, Microsoft for Edge, or Apple for Safari) under that provider&rsquo;s privacy terms. Typed entry involves no audio at all.</p>
     <h2>Newsletter</h2>
     <p>You can unsubscribe from Securities Compliance Weekly at any time using the link in any issue or by emailing <a href="mailto:{SITE["email"]}">{SITE["email"]}</a>.</p>
     <h2>Children</h2>

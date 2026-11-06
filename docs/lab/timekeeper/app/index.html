@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Legal Timekeeper | J.T. Barnes &amp; Associates</title>
+<meta name="description" content="Legal Timekeeper: voice and typed time entry for legal work, with billing increments, history, export, and optional Microsoft OneDrive sync.">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; manifest-src 'self'; worker-src 'self'; connect-src 'self' https://login.microsoftonline.com https://graph.microsoft.com https://*.1drv.com https://*.microsoftpersonalcontent.com https://*.sharepoint.com https://*.svc.ms https://*.livefilestore.com; form-action 'self'; base-uri 'self'; object-src 'none'">
+<meta name="theme-color" content="#1C1C1C">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Timekeeper">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preload" href="/assets/fonts/dm-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="app.css">
+<script type="module" src="js/app.js"></script>
+</head>
+<body>
+<a class="skip" href="#log">Skip to time entry</a>
+
+<header class="bar">
+  <a class="bar-brand" href="/lab/timekeeper/" aria-label="About the Legal Timekeeper">
+    <img src="/assets/img/barnes-logo-white.png" alt="Barnes" width="96" height="26">
+    <span class="bar-title">Legal <em>Timekeeper</em></span>
+  </a>
+  <div class="bar-actions">
+    <button type="button" class="sync-chip" id="syncChip" aria-live="polite" hidden>
+      <span class="dot" aria-hidden="true"></span><span id="syncText">On this device</span>
+    </button>
+    <button type="button" class="icon-btn" id="openExport" aria-haspopup="dialog">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5M4 17v3h16v-3"/></svg><span>Export</span>
+    </button>
+    <button type="button" class="icon-btn" id="openSettings" aria-haspopup="dialog">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M5.5 18.5l1.7-1.7M16.8 7.2l1.7-1.7"/></svg><span>Settings</span>
+    </button>
+  </div>
+</header>
+
+<div class="notice" id="notice" hidden>
+  <p id="noticeText"></p>
+  <div class="notice-actions">
+    <button type="button" class="btn btn-teal btn-sm" id="noticeAction" hidden></button>
+    <button type="button" class="link-btn" id="noticeDismiss">Dismiss</button>
+  </div>
+</div>
+
+<main class="layout">
+  <!-- ============ Log time ============ -->
+  <section class="panel" id="log" aria-labelledby="logTitle">
+    <div class="panel-head">
+      <div>
+        <span class="eyebrow">Log time</span>
+        <h1 id="logTitle">New entry <span class="for-day" id="forDay"></span></h1>
+      </div>
+      <div class="seg" role="tablist" aria-label="Entry method">
+        <button type="button" role="tab" id="tabVoice" aria-controls="voicePane" aria-selected="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>Speak
+        </button>
+        <button type="button" role="tab" id="tabType" aria-controls="typePane" aria-selected="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h.01M11 10h.01M15 10h.01M7 14h10"/></svg>Type
+        </button>
+      </div>
+    </div>
+
+    <!-- Voice -->
+    <div class="pane" id="voicePane" role="tabpanel" aria-labelledby="tabVoice">
+      <ol class="chat" id="chat" aria-live="polite" aria-label="Conversation"></ol>
+      <div class="mic-row">
+        <button type="button" class="mic" id="micBtn" aria-pressed="false" aria-describedby="micStatus">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>
+          <span class="sr-only" id="micLabel">Start speaking</span>
+        </button>
+        <p class="mic-status" id="micStatus">Tap the microphone and say who the work was for.</p>
+      </div>
+      <form class="reply" id="replyForm" autocomplete="off">
+        <label class="sr-only" for="replyInput">Type your answer</label>
+        <input id="replyInput" type="text" placeholder="Or type your answer" enterkeyhint="send">
+        <button type="submit" class="btn btn-ghost">Send</button>
+      </form>
+      <p class="hint">Say <b>start over</b> to restart or <b>go back</b> to change your last answer.</p>
+    </div>
+
+    <!-- Typed -->
+    <form class="pane entry-form" id="typePane" role="tabpanel" aria-labelledby="tabType" hidden novalidate autocomplete="off">
+      <div class="field-row">
+        <div class="field">
+          <label for="fClient">Client</label>
+          <input id="fClient" list="clientList" required maxlength="200" autocapitalize="words">
+        </div>
+        <div class="field">
+          <label for="fMatter">Matter</label>
+          <input id="fMatter" list="matterList" maxlength="200" autocapitalize="sentences">
+        </div>
+      </div>
+      <fieldset class="field">
+        <legend>Time type</legend>
+        <div class="choice" id="fType">
+          <label><input type="radio" name="type" value="billable" checked><span>Billable</span></label>
+          <label><input type="radio" name="type" value="non-billable"><span>Non-billable</span></label>
+          <label><input type="radio" name="type" value="billable-pending"><span>Pending</span></label>
+        </div>
+      </fieldset>
+      <div class="field-row narrow">
+        <div class="field">
+          <label for="fHours">Hours</label>
+          <input id="fHours" inputmode="decimal" required placeholder="1.5 or 90 min" aria-describedby="hoursHelp">
+          <small id="hoursHelp" class="help"></small>
+        </div>
+        <div class="field">
+          <label for="fDate">Date</label>
+          <input id="fDate" type="date" required>
+        </div>
+      </div>
+      <div class="field">
+        <label for="fNarrative">Narrative</label>
+        <textarea id="fNarrative" rows="4" maxlength="5000" placeholder="What was done, in the words that should appear on the bill"></textarea>
+      </div>
+      <p class="form-error" id="formError" role="alert" hidden></p>
+      <div class="form-actions">
+        <button type="button" class="link-btn danger" id="fDelete" hidden>Delete entry</button>
+        <span class="spacer"></span>
+        <button type="button" class="btn btn-ghost" id="fClear">Clear</button>
+        <button type="submit" class="btn btn-teal" id="fSubmit">Add entry</button>
+      </div>
+    </form>
+    <datalist id="clientList"></datalist>
+    <datalist id="matterList"></datalist>
+  </section>
+
+  <!-- ============ Day ============ -->
+  <section class="panel day" aria-labelledby="dayTitle">
+    <div class="day-nav">
+      <button type="button" class="icon-btn round" id="prevDay" aria-label="Previous day"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6-6 6 6 6"/></svg></button>
+      <label class="day-label">
+        <span class="eyebrow" id="dayKicker">Today</span>
+        <span class="day-title" id="dayTitle"></span>
+        <input type="date" id="dayPicker" aria-label="Choose a day">
+      </label>
+      <button type="button" class="icon-btn round" id="nextDay" aria-label="Next day"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"/></svg></button>
+      <button type="button" class="btn btn-ghost btn-sm" id="todayBtn" hidden>Today</button>
+    </div>
+    <dl class="totals">
+      <div><dt>Total</dt><dd id="tTotal">0.0</dd></div>
+      <div><dt>Billable</dt><dd id="tBillable">0.0</dd></div>
+      <div><dt>Entries</dt><dd id="tCount">0</dd></div>
+    </dl>
+    <ul class="entries" id="entries" aria-label="Entries for this day"></ul>
+    <p class="empty" id="empty">No time logged for this day yet.</p>
+  </section>
+</main>
+
+<footer class="foot">
+  <p>Entries are kept on this device<span id="footSync"></span>. <a href="/lab/timekeeper/">About</a> &middot; <a href="/legal/privacy/">Privacy</a> &middot; <a href="/">J.T. Barnes &amp; Associates, PLLC</a></p>
+  <p class="small">A Lab tool shared for general use. It is not a legal service and does not create an attorney-client relationship.</p>
+</footer>
+
+<!-- ============ Export ============ -->
+<dialog id="exportDlg" aria-labelledby="exportTitle">
+  <form method="dialog" class="dlg">
+    <header class="dlg-head">
+      <h2 id="exportTitle">Export time</h2>
+      <button class="icon-btn close" value="close" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </header>
+    <fieldset class="field">
+      <legend>Period</legend>
+      <div class="choice wrap" id="rangeChoice">
+        <label><input type="radio" name="range" value="today" checked><span>Today</span></label>
+        <label><input type="radio" name="range" value="this-week"><span>This week</span></label>
+        <label><input type="radio" name="range" value="last-week"><span>Last week</span></label>
+        <label><input type="radio" name="range" value="this-month"><span>This month</span></label>
+        <label><input type="radio" name="range" value="last-month"><span>Last month</span></label>
+        <label><input type="radio" name="range" value="custom"><span>Custom</span></label>
+      </div>
+    </fieldset>
+    <div class="field-row" id="customRange" hidden>
+      <div class="field"><label for="xFrom">From</label><input type="date" id="xFrom"></div>
+      <div class="field"><label for="xTo">To</label><input type="date" id="xTo"></div>
+    </div>
+    <div class="summary" id="xSummary" aria-live="polite"></div>
+    <div class="dlg-actions">
+      <button type="button" class="btn btn-ghost" id="xCopy">Copy as text</button>
+      <button type="button" class="btn btn-ghost" id="xText">Download text</button>
+      <button type="button" class="btn btn-teal" id="xCsv">Download CSV</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- ============ Settings ============ -->
+<dialog id="settingsDlg" aria-labelledby="settingsTitle">
+  <form method="dialog" class="dlg">
+    <header class="dlg-head">
+      <h2 id="settingsTitle">Settings</h2>
+      <button class="icon-btn close" value="close" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </header>
+
+    <section class="set" id="setAccount">
+      <h3>Account and sync</h3>
+      <p class="muted" id="acctText"></p>
+      <div class="set-actions">
+        <button type="button" class="btn btn-ms" id="signInBtn">
+          <svg viewBox="0 0 21 21" aria-hidden="true"><path fill="#F25022" d="M1 1h9v9H1z"/><path fill="#7FBA00" d="M11 1h9v9h-9z"/><path fill="#00A4EF" d="M1 11h9v9H1z"/><path fill="#FFB900" d="M11 11h9v9h-9z"/></svg>
+          Sign in with Microsoft
+        </button>
+        <button type="button" class="btn btn-ghost" id="syncBtn" hidden>Sync now</button>
+        <button type="button" class="link-btn" id="signOutBtn" hidden>Sign out on this device</button>
+      </div>
+    </section>
+
+    <section class="set">
+      <h3>Billing increments</h3>
+      <div class="field">
+        <label for="sIncrement">Record hours as</label>
+        <select id="sIncrement">
+          <option value="0.1:up">Tenths of an hour (6 minutes), rounded up</option>
+          <option value="0.1:nearest">Tenths of an hour, rounded to nearest</option>
+          <option value="0.25:up">Quarter hours (15 minutes), rounded up</option>
+          <option value="0:none">Exactly as entered</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="set">
+      <h3>Voice</h3>
+      <label class="switch"><input type="checkbox" id="sSpeak"><span>Read questions aloud</span></label>
+      <label class="switch"><input type="checkbox" id="sListen"><span>Keep listening between questions</span></label>
+      <p class="muted" id="voiceSupport"></p>
+    </section>
+
+    <section class="set">
+      <h3>Daily reminder</h3>
+      <label class="switch"><input type="checkbox" id="sRemind"><span>Remind me to log time</span></label>
+      <div class="field-row narrow">
+        <div class="field"><label for="sRemindTime">Time</label><input type="time" id="sRemindTime" value="17:30"></div>
+      </div>
+      <fieldset class="field">
+        <legend>Days</legend>
+        <div class="choice days" id="sDays">
+          <label><input type="checkbox" value="1"><span>Mon</span></label>
+          <label><input type="checkbox" value="2"><span>Tue</span></label>
+          <label><input type="checkbox" value="3"><span>Wed</span></label>
+          <label><input type="checkbox" value="4"><span>Thu</span></label>
+          <label><input type="checkbox" value="5"><span>Fri</span></label>
+          <label><input type="checkbox" value="6"><span>Sat</span></label>
+          <label><input type="checkbox" value="0"><span>Sun</span></label>
+        </div>
+      </fieldset>
+      <p class="muted">Browser reminders appear only while the Timekeeper is open. For a reminder that always arrives, add it to your calendar.</p>
+      <div class="set-actions"><button type="button" class="btn btn-ghost" id="icsBtn">Add reminder to my calendar</button></div>
+    </section>
+
+    <section class="set">
+      <h3>Your data</h3>
+      <div class="set-actions">
+        <button type="button" class="btn btn-ghost" id="backupBtn">Download full backup</button>
+        <label class="btn btn-ghost file-btn">Import a file<input type="file" id="importFile" accept=".csv,.json,text/csv,application/json"></label>
+      </div>
+      <p class="muted">Import accepts a backup from this app, a CSV from this app, or a CSV exported by the original My Legal Timekeeper.</p>
+      <div class="set-actions"><button type="button" class="link-btn danger" id="wipeBtn">Delete all entries</button></div>
+    </section>
+
+    <p class="muted small" id="aboutText"></p>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden>
+  <span id="toastText"></span>
+  <button type="button" class="link-btn" id="toastAction" hidden></button>
+</div>
+</body>
+</html>
