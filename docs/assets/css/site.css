@@ -237,6 +237,18 @@ a.card:hover .text-link { text-decoration: underline; text-decoration-color: var
 a.card-top-rule:hover { border-top-color: var(--rust); }
 .zone-lab .card { background: var(--surface); }
 
+/* Practice grid: seven areas plus a contact card, four across */
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.grid-4 .card { padding: 26px 22px; display: flex; flex-direction: column; }
+.grid-4 .card h3 { font-size: 1.12rem; }
+.grid-4 .card p { font-size: .94rem; flex: 1; }
+.grid-4 .card .text-link { align-self: flex-start; }
+.card-cta { background: var(--night); border-color: var(--night); border-top: 2px solid var(--night); }
+.card-cta h3 { color: var(--paper); }
+.card-cta p, .card-cta .index { color: var(--paper-muted); }
+.card-cta .index { text-transform: uppercase; }
+a.card-cta:hover { border-color: var(--night); border-top-color: var(--copper); box-shadow: 0 16px 34px -20px rgba(23,25,29,.55); }
+
 /* Status labels: shape carries meaning, not color alone */
 .status { display: inline-flex; align-items: center; gap: 9px; font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 16px; color: var(--ink-muted); }
 .status::before { content: ""; width: 8px; height: 8px; flex: none; }
@@ -364,6 +376,7 @@ a.card-top-rule:hover { border-top-color: var(--rust); }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1020px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
   .footer-top { grid-template-columns: 1fr 1fr 1fr; }
   .footer-brand { grid-column: 1 / -1; }
   .steps { grid-template-columns: repeat(2, 1fr); }
@@ -386,7 +399,7 @@ a.card-top-rule:hover { border-top-color: var(--rust); }
   .form .row-2 { grid-template-columns: 1fr; }
 }
 @media (max-width: 560px) {
-  .steps, .flow { grid-template-columns: 1fr; }
+  .steps, .flow, .grid-4 { grid-template-columns: 1fr; }
   .footer-top { grid-template-columns: 1fr 1fr; }
   .utility .wrap { justify-content: flex-end; }
   .utility .phone { display: none; }

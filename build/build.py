@@ -94,9 +94,9 @@ PRACTICE = [
         "slug": "fund-formation",
         "title": "Fund Formation &amp; Alternative Investments",
         "nav": "Fund Formation",
-        "summary": "Structuring and documenting private investment funds and co-investment vehicles for sponsors, managers, and the families and institutions that invest alongside them.",
+        "summary": "Structuring and documenting private equity, private credit, real estate, and venture funds and co-investment vehicles for sponsors, managers, and the families and institutions that invest alongside them.",
         "overview": [
-            "Jason has advised on fund formations across private equity, venture capital, real estate, credit, and impact strategies, representing both the sponsors raising capital and the investors committing it.",
+            "Jason has advised on fund formations across private equity, private credit, venture capital, real estate, and impact strategies, representing both the sponsors raising capital and the investors committing it.",
             "That two-sided perspective shapes how terms get drafted: anticipating what sophisticated limited partners will negotiate, and protecting sponsors from provisions that look standard but carry real cost over the life of a fund.",
         ],
         "work": [
@@ -109,6 +109,27 @@ PRACTICE = [
             "Small Business Investment Company (SBIC) fund structures",
         ],
         "clients": "Emerging and established fund sponsors, investment managers and advisers, and family offices investing as limited partners.",
+    },
+    {
+        "slug": "private-equity-private-credit",
+        "title": "Private Equity &amp; Private Credit",
+        "nav": "Private Equity &amp; Credit",
+        "summary": "Fund, deal, and financing counsel for middle-market private equity sponsors, private credit managers, and the family offices that invest alongside them.",
+        "overview": [
+            "Private equity and private credit now sit side by side in most middle-market transactions. A sponsor raises a fund, acquires a company, and finances the acquisition with a direct lender rather than a bank. Jason advises at each layer of that structure: the fund that raises the capital, the transaction it backs, and the credit that finances it.",
+            "Having represented sponsors, investors, and capital providers, he drafts with the next negotiation in mind: the side letter a limited partner will request, the lender consent needed at exit, and the covenant that matters when performance slips.",
+        ],
+        "work": [
+            "Buyout, growth, and independent-sponsor vehicles, including deal-by-deal funds and co-investment vehicles",
+            "Platform and add-on acquisitions, recapitalizations, and management rollover",
+            "Direct lending, mezzanine, and opportunistic credit funds",
+            "Senior, unitranche, and subordinated loan documentation",
+            "Preferred equity and other structured capital",
+            "Fund-level financing, including subscription lines and NAV facilities",
+            "Texas usury, licensing, and securities questions in privately originated loans",
+            "Family office direct lending and co-lending alongside institutional managers",
+        ],
+        "clients": "Middle-market and independent sponsors, private credit managers and emerging lenders, family offices investing directly or alongside sponsors, and the companies they back.",
     },
     {
         "slug": "capital-markets",
@@ -145,6 +166,7 @@ PRACTICE = [
             "Governance frameworks, investment committees, and decision rights",
             "Direct investments and co-investments alongside institutional sponsors",
             "Commitments to third-party funds, including side letter negotiation",
+            "Direct lending and private credit allocations",
             "Planning around liquidity events and business transitions",
         ],
         "clients": "Families and family offices, family-owned businesses, and the wealth, tax, and accounting advisors who serve them.",
@@ -180,6 +202,7 @@ PRACTICE = [
         ],
         "work": [
             "Acquisitions and dispositions of private companies and business assets",
+            "Sponsor-backed acquisitions and add-ons, financed by banks or direct lenders",
             "Holding company and acquisition vehicle structures",
             "Joint ventures between operators and capital partners",
             "Recapitalizations, restructurings, and growth financings",
@@ -481,8 +504,8 @@ ORG_LD = {
     "address": {"@type": "PostalAddress", "addressLocality": SITE["locality"],
                 "addressRegion": SITE["region"], "addressCountry": "US"},
     "areaServed": ["United States", "International"],
-    "knowsAbout": ["Securities law", "Private fund formation", "Private placements", "Family office structuring",
-                   "EB-5 finance", "Mergers and acquisitions", "Real estate joint ventures"],
+    "knowsAbout": ["Securities law", "Private fund formation", "Private equity", "Private credit", "Private placements",
+                   "Family office structuring", "EB-5 finance", "Mergers and acquisitions", "Real estate joint ventures"],
     "founder": {"@id": SITE["url"] + "/about/#jason"},
     "sameAs": [SITE["linkedin"]],
 }
@@ -511,6 +534,13 @@ def build_home():
   <p>{p["summary"]}</p>
   <span class="text-link">Learn more</span>
 </a>''' for i, p in enumerate(PRACTICE, 1))
+
+    cards += f'''<a class="card card-cta on-dark" href="/contact/">
+  <span class="index">Not sure?</span>
+  <h3>Where does your matter fit?</h3>
+  <p>Most transactions touch several of these areas. Describe yours in general terms and Jason will tell you how he can help.</p>
+  <span class="text-link">Start a conversation</span>
+</a>'''
     body = f'''<section class="hero on-dark">
   <div class="wrap">
     <div>
@@ -545,7 +575,7 @@ def build_home():
       <h2>Counsel across the capital stack.</h2>
       <p class="lede">Having represented capital providers, investors, and those raising capital, Jason brings each side&rsquo;s view of the deal to the table, across the full life of an investment or a company.</p>
     </div>
-    <div class="grid-3">{cards}</div>
+    <div class="grid-4">{cards}</div>
   </div>
 </section>
 
@@ -559,7 +589,7 @@ def build_home():
     </div>
     <div class="audience">
       <div><h4>Family offices &amp; private investors</h4><p>Governance, investment vehicles, and co-investments.</p></div>
-      <div><h4>Fund sponsors &amp; managers</h4><p>Formation, offerings, and adviser questions.</p></div>
+      <div><h4>Private equity &amp; credit managers</h4><p>Funds, acquisitions, and financing.</p></div>
       <div><h4>Middle-market businesses</h4><p>Capital raises, acquisitions, and joint ventures.</p></div>
       <div><h4>Real estate sponsors</h4><p>Joint ventures, capital stacks, and syndications.</p></div>
       <div><h4>Cross-border investors</h4><p>Inbound capital, EB-5, and offshore offerings.</p></div>
@@ -599,7 +629,7 @@ def build_home():
 
 {cta_band()}'''
     page("/", f"{SITE['short']} | Corporate Finance &amp; Securities Counsel, Dallas",
-         "J.T. Barnes & Associates, PLLC: corporate finance, securities, fund formation, family office, EB-5, M&A, and real estate capital counsel for families, funds, and middle-market businesses. Dallas, Texas.",
+         "J.T. Barnes & Associates, PLLC: corporate finance, securities, fund formation, private equity, private credit, family office, EB-5, M&A, and real estate capital counsel for families, funds, and middle-market businesses. Dallas, Texas.",
          body, jsonld=ORG_LD)
 
 
@@ -610,13 +640,20 @@ def build_practice():
   <p>{p["summary"]}</p>
   <span class="text-link">Learn more</span>
 </a>''' for i, p in enumerate(PRACTICE, 1))
+
+    cards += f'''<a class="card card-cta on-dark" href="/contact/">
+  <span class="index">Not sure?</span>
+  <h3>Where does your matter fit?</h3>
+  <p>Most transactions touch several of these areas. Describe yours in general terms and Jason will tell you how he can help.</p>
+  <span class="text-link">Start a conversation</span>
+</a>'''
     body = page_hero([("Home", "/"), ("Practice", None)], "Practice Areas",
                      "Structuring, documenting, and negotiating capital transactions.",
                      "The practice links capital providers with those seeking capital, across borders both physical and figurative, for clients ranging from early-stage sponsors to multi-generational family offices.")
     body += f'''
 <section class="section">
   <div class="wrap">
-    <div class="grid-3">{cards}</div>
+    <div class="grid-4">{cards}</div>
   </div>
 </section>
 <section class="section section-stone">
@@ -626,7 +663,7 @@ def build_practice():
 </section>
 {cta_band()}'''
     page("/practice/", "Practice Areas",
-         "Fund formation, securities offerings, family office advisory, EB-5 finance, M&A and joint ventures, and real estate capital transactions.",
+         "Fund formation, private equity and private credit, securities offerings, family office advisory, EB-5 finance, M&A and joint ventures, and real estate capital transactions.",
          body)
 
     for p in PRACTICE:
@@ -827,7 +864,7 @@ def build_contact():
   </div>
 </section>'''
     page("/contact/", "Contact",
-         "Contact J.T. Barnes & Associates, PLLC in Dallas, Texas for corporate finance, securities, fund formation, EB-5, and M&A counsel.",
+         "Contact J.T. Barnes & Associates, PLLC in Dallas, Texas for corporate finance, securities, fund formation, private equity, private credit, EB-5, and M&A counsel.",
          body)
 
 
