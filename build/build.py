@@ -373,8 +373,8 @@ def head(path, title, description, noindex=False, jsonld=None):
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 <link rel="preload" href="/assets/fonts/libre-franklin-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/libre-franklin-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/site.css">
-<script src="/assets/js/site.js" defer></script>{ld}
+<link rel="stylesheet" href="/assets/css/site.css?v={ASSET_V["css"]}">
+<script src="/assets/js/site.js?v={ASSET_V["js"]}" defer></script>{ld}
 </head>'''
 
 
@@ -390,6 +390,15 @@ def page(path, title, description, body, zone="firm", noindex=False, jsonld=None
     with open(target, "w", encoding="utf-8") as f:
         f.write(html)
     PAGES.append((path, noindex))
+
+
+def _asset_version(rel):
+    """Short content hash, appended to asset URLs so browsers fetch a fresh copy whenever the file changes."""
+    import hashlib
+    return hashlib.sha256(open(os.path.join(ROOT, "docs", rel), "rb").read()).hexdigest()[:10]
+
+
+ASSET_V = {"css": _asset_version("assets/css/site.css"), "js": _asset_version("assets/js/site.js")}
 
 
 def closing(h1):
