@@ -5,12 +5,13 @@ Website of **J.T. Barnes & Associates, PLLC**: a client-facing law firm site (th
 - Hosting: GitHub Pages, published from the `docs/` folder of the `main` branch
 - Domain: `jtbarnespllc.com` (set by `docs/CNAME`)
 - No frameworks, no build service, no cookies, no third-party requests. Fonts are self-hosted.
+- Design: Barnes Brand v1 (November 2026). Libre Franklin, Ink / White / Rust, the closing corner. See `brand/barnes-brand-web.json`.
 
 ## Repository layout
 
 ```
 build/build.py            Site generator: firm data, page copy, shared header and footer
-brand/                    MLA palette entry for the Barnes PLLC identity layer
+brand/                    Barnes Brand web tokens (barnes-brand-web.json), Timekeeper logo
 docs/                     Published website (GitHub Pages serves this folder)
   index.html              Home (client landing)
   practice/               Practice overview + six practice-area pages
@@ -20,7 +21,8 @@ docs/                     Published website (GitHub Pages serves this folder)
   404.html  sitemap.xml  robots.txt  CNAME  .nojekyll
   assets/css/site.css     Design tokens and all styles
   assets/js/site.js       Menu, forms, and the CONFIG block
-  assets/fonts/  assets/img/
+  assets/fonts/            Libre Franklin (woff2) and its license
+  assets/img/brand/        Logo and icon SVGs (supplied artwork; never retype the logo)
 ```
 
 ## Everyday edits
@@ -40,7 +42,8 @@ Commit both `build/build.py` and the regenerated `docs/` files.
 | Practice-area pages | `PRACTICE` (one dict per page) |
 | Publish an article | Add a dict to `ARTICLES` (slug, title, date, category, summary, body) |
 | Contact form or newsletter provider | `CONFIG` at the top of `docs/assets/js/site.js` |
-| Colors and type | Tokens at the top of `docs/assets/css/site.css` |
+| Colors and type | Tokens at the top of `docs/assets/css/site.css` (keep `brand/barnes-brand-web.json` in step) |
+| The corner after each page headline | `closing()` in `build/build.py` |
 
 ### Forms
 

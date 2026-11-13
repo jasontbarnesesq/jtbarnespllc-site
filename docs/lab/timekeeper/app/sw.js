@@ -1,14 +1,15 @@
 /* Legal Timekeeper service worker.
    Network first for the app's own files, so updates arrive on the next visit; the cached copy is used only offline.
    Microsoft sign-in and OneDrive requests are never cached. */
-const CACHE = 'timekeeper-2.0.0';
+const CACHE = 'timekeeper-2.1.0';
 const SHELL = [
   './', './index.html', './app.css', './manifest.webmanifest',
   './js/app.js', './js/core.js', './js/auth.js', './js/sync.js', './js/config.js',
   './icons/icon-192.png', './icons/favicon-32.png',
-  '/assets/img/barnes-logo-white.png',
-  '/assets/fonts/dm-sans-latin-400-normal.woff2', '/assets/fonts/dm-sans-latin-500-normal.woff2', '/assets/fonts/dm-sans-latin-600-normal.woff2',
-  '/assets/fonts/playfair-display-latin-400-normal.woff2', '/assets/fonts/playfair-display-latin-400-italic.woff2',
+  '/assets/img/brand/barnes-logo-reversed.svg',
+  '/assets/fonts/libre-franklin-latin-400-normal.woff2', '/assets/fonts/libre-franklin-latin-500-normal.woff2',
+  '/assets/fonts/libre-franklin-latin-600-normal.woff2', '/assets/fonts/libre-franklin-latin-700-normal.woff2',
+  '/assets/fonts/libre-franklin-latin-800-normal.woff2',
 ];
 
 self.addEventListener('install', e => {
