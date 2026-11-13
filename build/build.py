@@ -386,7 +386,7 @@ def head(path, title, description, noindex=False, jsonld=None):
 <meta property="og:title" content="{full_title}">
 <meta property="og:description" content="{escape(description, quote=True)}">
 <meta property="og:url" content="{canonical}">
-<meta property="og:image" content="{SITE["url"]}/assets/img/og-image.jpg">
+<meta property="og:image" content="{SITE["url"]}/assets/img/og-image.jpg?v={ASSET_V["og"]}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -421,12 +421,18 @@ def _asset_version(rel):
     return hashlib.sha256(open(os.path.join(ROOT, "docs", rel), "rb").read()).hexdigest()[:10]
 
 
-ASSET_V = {"css": _asset_version("assets/css/site.css"), "js": _asset_version("assets/js/site.js")}
+ASSET_V = {"css": _asset_version("assets/css/site.css"), "js": _asset_version("assets/js/site.js"),
+           "og": _asset_version("assets/img/og-image.jpg")}
 
 
 def closing(h1):
-    """Wrap the headline's last word with the brand's closing corner so the two never separate."""
+    """End the headline with the brand's closing corner in place of its period, keeping the corner
+    on the same line as the last word."""
     head, _, last = h1.rstrip().rpartition(" ")
+    # The corner closes the statement, as it does in the logo, so it replaces a final period.
+    # Other end punctuation (a question mark, say) stays.
+    if last.endswith(".") and not last.endswith(".."):
+        last = last[:-1]
     corner = '<span class="corner" aria-hidden="true"></span>'
     if last.endswith("</em>") and "<em>" not in last:
         # The highlight spans several words: keep the corner inside it so the tags nest correctly.
