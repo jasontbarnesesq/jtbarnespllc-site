@@ -269,13 +269,13 @@ def header(path):
   <div class="mainbar">
     <div class="wrap">
       <a class="brand" href="/" aria-label="{SITE["firm"]}, home">
-        <img src="/assets/img/barnes-logo-white.png" width="521" height="179" alt="Barnes">
+        <img src="/assets/img/brand/barnes-logo-primary.svg" width="136" height="37" alt="Barnes">
         <span class="brand-name">J.T. Barnes<br>&amp; Associates, PLLC</span>
       </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
       <nav class="primary-nav" id="primary-nav" aria-label="Primary">
         <ul>{main}</ul>
-        <a class="btn btn-gold" href="{schedule_href()}"{schedule_attrs()}>Schedule a Consultation</a>
+        <a class="btn btn-primary" href="{schedule_href()}"{schedule_attrs()}>Schedule a consultation</a>
       </nav>
     </div>
   </div>
@@ -288,9 +288,9 @@ def footer():
   <div class="wrap">
     <div class="footer-top">
       <div class="footer-brand">
-        <img src="/assets/img/barnes-logo-white.png" width="521" height="179" alt="Barnes" loading="lazy">
+        <img src="/assets/img/brand/barnes-logo-reversed.svg" width="150" height="41" alt="Barnes">
         <p><strong>{SITE["firm"]}</strong></p>
-        <p>Corporate finance, securities, and private capital counsel.</p>
+        <p>Institutional-quality counsel for private capital.</p>
         <p>{SITE["city"]}</p>
       </div>
       <div>
@@ -303,7 +303,7 @@ def footer():
           <li><a href="/approach/">Approach</a></li>
           <li><a href="/about/">About Jason</a></li>
           <li><a href="/contact/">Contact</a></li>
-          <li><a href="{schedule_href()}"{schedule_attrs()}>Schedule a Consultation</a></li>
+          <li><a href="{schedule_href()}"{schedule_attrs()}>Schedule a consultation</a></li>
         </ul>
       </div>
       <div>
@@ -357,7 +357,7 @@ def head(path, title, description, noindex=False, jsonld=None):
 <link rel="canonical" href="{canonical}">{robots}
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'self' https:; form-action 'self' https: mailto:; base-uri 'self'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta name="theme-color" content="#1C1C1C">
+<meta name="theme-color" content="#FFFFFF">
 <meta property="og:site_name" content="{SITE["firm"]}">
 <meta property="og:type" content="website">
 <meta property="og:title" content="{full_title}">
@@ -368,10 +368,11 @@ def head(path, title, description, noindex=False, jsonld=None):
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
-<link rel="preload" href="/assets/fonts/dm-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/playfair-display-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/libre-franklin-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/libre-franklin-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/site.css">
 <script src="/assets/js/site.js" defer></script>{ld}
 </head>'''
@@ -391,13 +392,25 @@ def page(path, title, description, body, zone="firm", noindex=False, jsonld=None
     PAGES.append((path, noindex))
 
 
+def closing(h1):
+    """Wrap the headline's last word with the brand's closing corner so the two never separate."""
+    head, _, last = h1.rstrip().rpartition(" ")
+    corner = '<span class="corner" aria-hidden="true"></span>'
+    if last.endswith("</em>") and "<em>" not in last:
+        # The highlight spans several words: keep the corner inside it so the tags nest correctly.
+        tail = f'<span class="close-word">{last[:-5]}{corner}</span></em>'
+    else:
+        tail = f'<span class="close-word">{last}{corner}</span>'
+    return f"{head} {tail}" if head else tail
+
+
 def page_hero(crumbs, eyebrow, h1, lede):
     trail = " &rsaquo; ".join(f'<a href="{h}">{t}</a>' if h else t for t, h in crumbs)
-    return f'''<section class="page-hero on-dark">
+    return f'''<section class="page-hero">
   <div class="wrap">
     <nav class="crumbs" aria-label="Breadcrumb">{trail}</nav>
     <span class="eyebrow">{eyebrow}</span>
-    <h1>{h1}</h1>
+    <h1>{closing(h1)}</h1>
     <p class="lede">{lede}</p>
   </div>
 </section>'''
@@ -409,7 +422,7 @@ def lab_hero(crumbs, badge, h1, lede):
   <div class="wrap">
     <nav class="crumbs" aria-label="Breadcrumb">{trail}</nav>
     <span class="lab-badge">{badge}</span>
-    <h1>{h1}</h1>
+    <h1>{closing(h1)}</h1>
     <p class="lede">{lede}</p>
   </div>
 </section>'''
@@ -429,7 +442,7 @@ def cta_band(h2="Discuss a transaction or offering.",
       <p>{p}</p>
     </div>
     <div class="actions">
-      <a class="btn btn-gold" href="{schedule_href()}"{schedule_attrs()}>Schedule a Consultation</a>
+      <a class="btn btn-primary" href="{schedule_href()}"{schedule_attrs()}>Schedule a consultation</a>
       <a class="btn btn-ghost" href="tel:{SITE["office_tel"]}">Call {SITE["office_phone"]}</a>
     </div>
   </div>
@@ -441,7 +454,7 @@ def newsletter_form(compact=False):
     return f'''<form class="form newsletter-form" novalidate>
   {name_field}
   <div><label for="nl-email{'-c' if compact else ''}">Email</label><input id="nl-email{'-c' if compact else ''}" name="email" type="email" autocomplete="email" required></div>
-  <div><button class="btn btn-teal" type="submit">Subscribe</button></div>
+  <div><button class="btn btn-primary" type="submit">Subscribe</button></div>
   <p class="form-status small" role="status" aria-live="polite"></p>
 </form>'''
 
@@ -493,11 +506,11 @@ def build_home():
   <div class="wrap">
     <div>
       <span class="eyebrow">{SITE["firm"]}</span>
-      <h1>Corporate finance and securities counsel for <em>families, funds,</em> and the middle market.</h1>
+      <h1>{closing("Corporate finance and securities counsel for <em>families, funds,</em> and the middle market.")}</h1>
       <p class="lede">Nearly 30 years structuring, documenting, and negotiating the transactions that connect capital providers with the businesses and sponsors raising it. Institutional-quality work, delivered directly by the attorney you hire.</p>
       <div class="hero-actions">
-        <a class="btn btn-gold" href="{schedule_href()}"{schedule_attrs()}>Schedule a Consultation</a>
-        <a class="btn btn-ghost" href="/practice/">Practice Areas</a>
+        <a class="btn btn-primary" href="{schedule_href()}"{schedule_attrs()}>Schedule a consultation</a>
+        <a class="btn btn-ghost" href="/practice/">Practice areas</a>
       </div>
     </div>
     <div class="hero-card">
@@ -633,7 +646,7 @@ def build_practice():
         <p>Initial conversations are confidential. Please share only general information until a conflicts check is complete.</p>
         <p class="contact-line"><a href="tel:{SITE["office_tel"]}">{SITE["office_phone"]}</a></p>
         <p class="contact-line"><a href="mailto:{SITE["email"]}">{SITE["email"]}</a></p>
-        <a class="btn btn-gold" href="{schedule_href()}"{schedule_attrs()}>Schedule a Consultation</a>
+        <a class="btn btn-primary" href="{schedule_href()}"{schedule_attrs()}>Schedule a consultation</a>
       </div>
       <nav class="related" aria-label="Other practice areas">
         <span class="eyebrow">Other practice areas</span>
@@ -758,7 +771,7 @@ def build_contact():
     options = "".join(f'<option>{p["nav"].replace("&amp;", "&")}</option>' for p in PRACTICE)
     sched = ""
     if SITE["scheduling_url"]:
-        sched = f'<p><a class="btn btn-dark" href="{SITE["scheduling_url"]}" target="_blank" rel="noopener">Book a time online</a></p>'
+        sched = f'<p><a class="btn btn-primary" href="{SITE["scheduling_url"]}" target="_blank" rel="noopener">Book a time online</a></p>'
     body = page_hero([("Home", "/"), ("Contact", None)], "Contact",
                      "Start a confidential conversation.",
                      "Tell us a little about your matter and how to reach you. Jason responds personally.")
@@ -789,7 +802,7 @@ def build_contact():
           <p class="hint">Please describe your matter in general terms and include the names of the other parties involved so we can check for conflicts. Do not send confidential information until we confirm we can represent you.</p>
         </div>
         <label class="check"><input type="checkbox" name="ack" required> I understand that submitting this form does not create an attorney-client relationship and that information I send before an engagement is confirmed may not be treated as confidential.</label>
-        <div><button class="btn btn-dark" type="submit">Send Inquiry</button></div>
+        <div><button class="btn btn-primary" type="submit">Send inquiry</button></div>
         <p id="contact-status" class="form-status" role="status" aria-live="polite"></p>
       </form>
     </div>
@@ -952,7 +965,7 @@ def build_lab():
         <li>Optional Microsoft sign-in keeps entries in sync across your devices through your own OneDrive</li>
         <li>Works offline and installs to a phone home screen; no subscription required</li>
       </ul>
-      <p class="mt-sm"><a class="btn btn-teal" href="{SITE["timekeeper_url"]}">Open the Timekeeper</a></p>
+      <p class="mt-sm"><a class="btn btn-primary" href="{SITE["timekeeper_url"]}">Open the Timekeeper</a></p>
       <p class="small mt-sm">Entries stay on your device and, if you sign in, in a private folder of your own OneDrive. The firm does not receive or store them.</p>
     </div>
     <div class="mock" role="img" aria-label="Sample Legal Timekeeper screen showing four time entries totaling 8.5 hours">
@@ -988,7 +1001,7 @@ def build_lab():
         <li>Matter and practice-area tagging</li>
         <li>Reminders for post-closing and filing obligations</li>
       </ul>
-      <p class="mt-sm"><a class="btn btn-teal" href="/newsletter/">Follow development</a></p>
+      <p class="mt-sm"><a class="btn btn-primary" href="/newsletter/">Follow development</a></p>
     </div>
     <div class="mock" role="img" aria-label="Sample Legal Minder conversation creating a calendar event from plain language">
       <div class="mock-bar"><span></span><span></span><span></span><em>Legal Minder &middot; sample data</em></div>
@@ -1029,7 +1042,7 @@ def build_lab():
         <li>A side panel builder for longer prompts, plus right-click coaching for text on any page</li>
         <li>Scoring and building run locally in the browser; the optional Deep Coach sends a draft to Claude only when you click it, using your own API key</li>
       </ul>
-      <p class="mt-sm"><a class="btn btn-teal" href="mailto:{SITE["email"]}?subject=Legal%20Prompt%20Coach">Request a copy</a></p>
+      <p class="mt-sm"><a class="btn btn-primary" href="mailto:{SITE["email"]}?subject=Legal%20Prompt%20Coach">Request a copy</a></p>
       <p class="small mt-sm">For Microsoft Edge and Google Chrome. The Prompt Coach improves how a request is written; it does not review the answer, and every output still needs a lawyer&rsquo;s judgment. Do not enter confidential client information into an AI tool your engagement terms do not permit.</p>
     </div>
     <div class="mock" role="img" aria-label="Sample Legal Prompt Coach session scoring a short document review prompt at 58, listing three gaps, and rebuilding it to a score of 91">

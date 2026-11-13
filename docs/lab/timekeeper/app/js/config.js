@@ -12,5 +12,5 @@ export const CONFIG = {
   SYNC_FILE: 'timekeeper-data.json',
   // Origins allowed to hand over entries from the old app (see the forwarding page).
   LEGACY_ORIGINS: ['https://jasontbarnes.com', 'https://www.jasontbarnes.com', 'https://jasontbarnesesq.github.io'],
-  VERSION: '2.0.0',
+  VERSION: '2.1.0',
 };
