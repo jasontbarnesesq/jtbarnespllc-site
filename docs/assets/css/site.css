@@ -414,3 +414,15 @@ a.card-cta:hover { border-color: var(--night); border-top-color: var(--copper); 
 .section-tight { padding: clamp(44px, 5vw, 64px) 0; }
 .aside-card .btn { text-align: center; }
 .form label.check { text-transform: none; letter-spacing: 0; font-weight: 400; font-size: .9rem; color: var(--ink-muted); }
+
+/* Speaking & CLE: program cards with a title-slide thumbnail */
+.talks { align-items: stretch; }
+.talk { display: flex; flex-direction: column; padding: 0 0 26px; }
+.talk > :not(.talk-thumb) { margin-left: 26px; margin-right: 26px; }
+.talk-thumb { display: block; aspect-ratio: 16 / 10; background: var(--stone); border-bottom: 1px solid var(--rule); margin-bottom: 22px; overflow: hidden; }
+.talk-thumb img { width: 100%; height: 100%; object-fit: contain; }
+.talk h3 { font-size: 1.12rem; }
+.talk p { font-size: .94rem; margin-bottom: .7em; }
+.talk .talk-note { font-size: .86rem; }
+.talk-links { margin-top: auto; padding-top: 8px; display: flex; flex-direction: column; gap: 6px; }
+.talk-links .muted { font-weight: 400; }
