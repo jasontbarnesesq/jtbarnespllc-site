@@ -241,6 +241,24 @@ PRACTICE = [
 #    TOPICS    the topic tags; practice-area topics share the practice slug
 # ---------------------------------------------------------------------------
 ARTICLES = [
+    {"slug": "continuation-vehicles-defensible-process", "featured": True,
+     "title": "Continuation Vehicles After the Vacatur: What a Defensible Process Looks Like",
+     "date": "2026-11-15", "kind": "Article",
+     "topics": ["fund-formation", "private-equity-private-credit"],
+     "program": "2026-11-02-private-market-liquidity",
+     "summary": "The SEC rule that would have required a fairness opinion is gone. The sponsor's duty is not. What investors, advisory committees, and sponsors should expect from a continuation vehicle process now that ILPA has finalized its guidance."},
+    {"slug": "is-your-loan-a-security", "featured": True,
+     "title": "Is Your Loan a Security? Three Questions for Private Credit Lenders and Borrowers",
+     "date": "2026-11-15", "kind": "Article",
+     "topics": ["private-equity-private-credit", "real-estate", "capital-markets"],
+     "program": "2026-08-24-securities-issues-in-private-credit",
+     "summary": "A private credit deal is a lending transaction and, very often, three separate securities questions: the fund that raised the money, the loan itself, and whoever was paid to find the capital. Where each one bites, for corporate and real estate credit alike."},
+    {"slug": "rolling-equity-in-a-private-equity-sale", "featured": True,
+     "title": "Rolling Equity in a Private Equity Sale: The Securities Questions Sellers Should Ask",
+     "date": "2026-11-15", "kind": "Article",
+     "topics": ["ma-structured-finance", "family-office"],
+     "program": "2026-02-securities-compliance-in-ma",
+     "summary": "Rollover equity, seller notes, and earnouts are securities or may be. The rights founders and families most often leave on the table when selling to a private equity buyer, and how to protect the value that is not paid at closing."},
     # {
     #     "slug": "example-article",               # page: /insights/articles/example-article/
     #     "title": "Article title",
@@ -249,7 +267,9 @@ ARTICLES = [
     #     "topics": ["fund-formation"],            # one or more TOPICS slugs
     #     "series": "",                            # optional SERIES slug
     #     "summary": "One or two sentences for cards and search results.",
-    #     "body": "<p>First paragraph.</p><h2>Subhead</h2><p>More text.</p>",
+    #     "body": "<p>First paragraph.</p>",      # or omit and put the HTML in content/articles/<slug>.html
+    #     "featured": True,                        # shown in the Featured row on the Insights hub
+    #     "program": "<TALKS slug>",               # related Speaking & CLE program, cross-linked both ways
     # },
 ]
 
@@ -266,12 +286,12 @@ TALKS = [
      "title": "Private Market Liquidity in 2026",
      "subtitle": "Secondaries, Continuation Vehicles and Tender Offer Strategies",
      "pages": 24, "bytes": 217727, "thumb": (720, 405),
-     "quickref": "", "published": True},
+     "quickref": "/assets/speaking/2026-11-02-private-market-liquidity-quick-reference.pdf", "article": "continuation-vehicles-defensible-process", "published": True},
     {"slug": "2026-08-24-securities-issues-in-private-credit", "topics": ["private-equity-private-credit", "fund-formation"], "date": "2026-08-24", "date_label": "August 24, 2026",
      "title": "Securities Issues in Private Credit",
      "subtitle": "The Fastest-Growing Corner of Private Capital",
      "pages": 22, "bytes": 201782, "thumb": (932, 720),
-     "quickref": "", "published": True},
+     "quickref": "/assets/speaking/2026-08-24-securities-issues-in-private-credit-quick-reference.pdf", "article": "is-your-loan-a-security", "published": True},
     {"slug": "2026-07-27-enforcement-lessons-for-transactional-lawyers", "topics": ["enforcement-compliance", "capital-markets"], "date": "2026-07-27", "date_label": "July 27, 2026",
      "title": "Enforcement Lessons for Transactional Lawyers",
      "subtitle": "How Routine Transactions Become Regulatory Investigations",
@@ -297,7 +317,7 @@ TALKS = [
      "title": "Securities Compliance in M&amp;A: A Deal Lawyer&rsquo;s Playbook",
      "subtitle": "Navigating Securities Issues, Rollover Structures, and Seller Wealth Protection",
      "pages": 16, "bytes": 2178397, "thumb": (932, 720),
-     "quickref": "", "published": True},
+     "quickref": "/assets/speaking/2026-02-securities-compliance-in-ma-quick-reference.pdf", "article": "rolling-equity-in-a-private-equity-sale", "published": True},
     {"slug": "2025-11-24-foundations-of-fund-counsel-part-2", "topics": ["fund-formation", "private-equity-private-credit"], "series": "foundations-of-fund-counsel", "date": "2025-11-24", "date_label": "November 24, 2025",
      "title": "Foundations of Fund Counsel, Part 2",
      "subtitle": "Key Rules and Regulations for Counsel Advising Investment Funds and Advisers",
@@ -1035,6 +1055,13 @@ def build_insights_all():
     build_topics(items)
 
 
+def article_body(a):
+    if a.get("body"):
+        return a["body"]
+    with open(os.path.join(ROOT, "content", "articles", a["slug"] + ".html"), encoding="utf8") as f:
+        return f.read()
+
+
 def insight_items():
     out = []
     for a in ARTICLES:
@@ -1121,27 +1148,27 @@ def subscribe_band():
 def build_insights_hub(items):
     articles = [i for i in items if i["type"] == "article"]
     programs = [i for i in items if i["type"] == "program"]
-    lead = items[0] if items else None
+    featured = [a for a in ARTICLES if a.get("featured")][:3]
     feature = ""
-    if lead:
-        img = ""
-        if lead["thumb"]:
-            src, w, h = lead["thumb"]
-            img = f'<a class="feature-media" href="{lead["url"]}" tabindex="-1" aria-hidden="true"><img src="{src}" width="{w}" height="{h}" alt=""></a>'
-        action = "View the slides (PDF)" if lead["pdf"] else "Read"
+    if featured:
+        talk_by = {t["slug"]: t for t in TALKS}
+        cards = []
+        for a in featured:
+            t = talk_by.get(a.get("program", ""))
+            rel = (f'<p class="related-program"><span class="muted">From the program</span> <a href="/insights/speaking/#{t["slug"]}">{t["title"]}</a></p>'
+                   if t else "")
+            cards.append(f'''<article class="card featured-card">
+  <p class="feed-meta"><span class="feed-type">{a.get("kind", "Article")}</span><span>{fmt_date(a["date"])}</span></p>
+  <h3><a href="/insights/articles/{a["slug"]}/">{a["title"]}</a></h3>
+  <p>{a["summary"]}</p>
+  {topic_tags(a.get("topics", []))}
+  {rel}
+  <a class="text-link" href="/insights/articles/{a["slug"]}/">Read the article</a>
+</article>''')
         feature = f'''<section class="section">
   <div class="wrap">
-    <div class="section-head"><span class="eyebrow">Featured</span><h2>Latest from the practice</h2></div>
-    <article class="feature">
-      {img}
-      <div class="feature-body">
-        <p class="feed-meta"><span class="feed-type">{lead["label"]}</span><span>{lead["date_label"]}</span></p>
-        <h3><a href="{lead["url"]}">{lead["title"]}</a></h3>
-        <p>{lead["summary"]}</p>
-        {topic_tags(lead["topics"])}
-        <a class="text-link" href="{lead["url"]}">{action}</a>
-      </div>
-    </article>
+    <div class="section-head"><span class="eyebrow">Featured</span><h2>New from the practice</h2></div>
+    <div class="grid-3 featured-grid">{"".join(cards)}</div>
   </div>
 </section>'''
     n_art = f'{len(articles)} published' if articles else "First pieces publishing soon"
@@ -1172,7 +1199,7 @@ def build_insights_hub(items):
 <section class="section section-stone">
   <div class="wrap">
     <div class="section-head"><span class="eyebrow">Latest</span><h2>Recent insights</h2></div>
-    {feed(items[1:9])}
+    {feed([i for i in items if not (i['type'] == 'article' and any(a['slug'] in i['url'] for a in featured))][:8])}
     <p class="mt-sm"><a class="text-link" href="/insights/speaking/">All programs and slides</a></p>
   </div>
 </section>
@@ -1207,11 +1234,11 @@ def build_articles(items):
 
     for a in ARTICLES:
         crumbs = [("Home", "/"), ("Insights", "/insights/"), ("Articles", "/insights/articles/"), (a.get("kind", "Article"), None)]
-        body = page_hero(crumbs, f'{a.get("kind", "Article")} &middot; {fmt_date(a["date"])}', a["title"], a["summary"])
+        body = page_hero(crumbs, f'{a.get("kind", "Article")} &middot; {fmt_date(a["date"])} &middot; Jason T. Barnes', a["title"], a["summary"])
         body += insights_subnav("/insights/articles/")
         body += f'''
 <section class="section">
-  <div class="wrap"><article class="prose">{a["body"]}
+  <div class="wrap"><article class="prose">{article_body(a)}
     {topic_tags(a.get("topics", []))}
     <p class="small muted">This article is general information, not legal advice, and does not create an attorney-client relationship.</p>
   </article></div>
@@ -1344,8 +1371,11 @@ def build_speaking():
         w, h = t["thumb"]
         sub = f'<p>{t["subtitle"]}</p>' if t["subtitle"] else ""
         note = f'<p class="talk-note">{t["note"]}</p>' if t.get("note") else ""
-        qr = (f'<a class="text-link" href="{t["quickref"]}" download>Quick reference (PDF, 2 pages)</a>'
+        qr = (f'<a class="text-link" href="{t["quickref"]}">Quick reference <span class="muted">(PDF, 2 pages)</span></a>'
               if t["quickref"] else "")
+        art = next((a for a in ARTICLES if a["slug"] == t.get("article")), None)
+        if art:
+            qr += f'<a class="text-link" href="/insights/articles/{art["slug"]}/">Read the article</a>'
         return f'''<article class="card talk" id="{t["slug"]}">
   <a class="talk-thumb" href="{pdf}" tabindex="-1" aria-hidden="true"><img src="/assets/speaking/{t["slug"]}.webp" width="{w}" height="{h}" alt="" loading="lazy" decoding="async"></a>
   <span class="status status-live">{t["date_label"]}</span>
