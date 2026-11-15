@@ -498,7 +498,7 @@ def footer():
           <li><a href="/insights/articles/">Articles</a></li>
           <li><a href="/insights/series/">Series</a></li>
           <li><a href="/insights/speaking/">Speaking &amp; CLE</a></li>
-          <li><a href="/newsletter/">Securities Compliance Weekly</a></li>
+          <li><a href="/newsletter/">Signal (newsletter)</a></li>
         </ul>
       </div>
       <div>
@@ -797,7 +797,7 @@ def build_home():
     </div>
     <div class="grid-3">
       <a class="card" href="/insights/"><span class="status status-soon">Insights</span><h3>Writing on private capital</h3><p>Analysis of private funds, securities offerings, family office trends, and the economics of professional work.</p><span class="text-link">Read</span></a>
-      <a class="card" href="/newsletter/"><span class="status status-live">Weekly</span><h3>Securities Compliance Weekly</h3><p>Regulatory developments and market trends for fund managers, advisers, and family offices.</p><span class="text-link">Subscribe</span></a>
+      <a class="card" href="/newsletter/"><span class="status status-live">Every other Tuesday</span><h3>Signal</h3><p>Private capital, read clearly: what changed for fund sponsors, private lenders, EB-5 projects, and family offices, and why it matters.</p><span class="text-link">Subscribe</span></a>
       <a class="card" href="/lab/"><span class="status status-dev">Tools</span><h3>Practice tools</h3><p>The Legal Timekeeper, Legal Minder, Legal Prompt Coach, and the systems behind a technology-enabled practice.</p><span class="text-link">Explore the Lab</span></a>
     </div>
   </div>
@@ -1137,8 +1137,8 @@ def subscribe_band():
     </div>
     <div>
       <span class="eyebrow">Stay current</span>
-      <h2>Securities Compliance Weekly</h2>
-      <p>One email a week. No promotions.</p>
+      <h2>Signal</h2>
+      <p>Private capital, read clearly. Every other Tuesday; no promotions.</p>
       {newsletter_form(compact=True)}
     </div>
   </div>
@@ -1176,7 +1176,7 @@ def build_insights_hub(items):
   <a class="card card-top-rule" href="/insights/articles/"><span class="index">{n_art}</span><h3>Articles</h3><p>Articles, client alerts, and commentary on private capital transactions and regulation.</p><span class="text-link">Browse articles</span></a>
   <a class="card card-top-rule" href="/insights/series/"><span class="index">{len(SERIES)} series</span><h3>Series</h3><p>Multi-part collections, from the Foundations of Fund Counsel program to a question-by-question guide to private funds.</p><span class="text-link">Browse series</span></a>
   <a class="card card-top-rule" href="/insights/speaking/"><span class="index">{len(programs)} programs</span><h3>Speaking &amp; CLE</h3><p>Slides from Dallas Bar Association Securities Section programs, with quick references to follow.</p><span class="text-link">Browse programs</span></a>
-  <a class="card card-top-rule" href="/newsletter/"><span class="index">Weekly</span><h3>Newsletter</h3><p>Securities Compliance Weekly: the week&rsquo;s regulatory developments for advisers, fund managers, and family offices.</p><span class="text-link">Subscribe</span></a>
+  <a class="card card-top-rule" href="/newsletter/"><span class="index">Every other Tuesday</span><h3>Signal</h3><p>The newsletter: what changed in private capital, and why it matters, in a five-minute read.</p><span class="text-link">Subscribe</span></a>
 </div>'''
     body = page_hero([("Home", "/"), ("Insights", None)], "Insights",
                      "Writing and programs on <em>private capital</em>.",
@@ -1217,7 +1217,7 @@ def build_articles(items):
         listing = feed(articles)
     else:
         upcoming = "".join(series_card(sr, items) for sr in SERIES if sr["status"] == "In preparation")
-        listing = f'''<p>The first articles publish soon. Subscribe to <a href="/newsletter/">Securities Compliance Weekly</a> to receive them as they are released.</p>
+        listing = f'''<p>The first articles publish soon. Subscribe to <a href="/newsletter/">Signal</a> to receive them as they are released.</p>
 <div class="grid-3 mt-sm">{upcoming}</div>'''
     body = page_hero([("Home", "/"), ("Insights", "/insights/"), ("Articles", None)], "Insights &middot; Articles",
                      "Articles and <em>alerts</em>.",
@@ -1269,7 +1269,7 @@ def build_series(items):
         if parts:
             content = feed(parts)
         else:
-            content = f'''<div class="note-box"><strong>{sr["status"]}.</strong> The first installments publish soon. Subscribe to <a href="/newsletter/">Securities Compliance Weekly</a> to receive them as they are released.</div>'''
+            content = f'''<div class="note-box"><strong>{sr["status"]}.</strong> The first installments publish soon. Subscribe to <a href="/newsletter/">Signal</a> to receive them as they are released.</div>'''
         body = page_hero([("Home", "/"), ("Insights", "/insights/"), ("Series", "/insights/series/"), (sr["title"], None)],
                          f'Series &middot; {sr["status"] if not parts else str(len(parts)) + " parts"}', sr["title"], sr["summary"])
         body += insights_subnav("/insights/series/")
@@ -1443,8 +1443,8 @@ def build_speaking():
 
 def build_newsletter():
     body = page_hero([("Home", "/"), ("Insights", "/insights/"), ("Newsletter", None)], "Insights &middot; Newsletter",
-                     "Securities <em>Compliance</em> Weekly",
-                     "Regulatory developments, market trends, and practical guidance for investment advisers, fund managers, and family offices. Written from an active securities practice, not a content desk.")
+                     "<em>Signal</em>",
+                     "Private capital, read clearly. Every other Tuesday, a five-minute read on what changed for fund sponsors, private lenders, EB-5 projects, family offices, and the businesses they back, and why it matters. Written from an active practice, not a content desk.")
     body += insights_subnav("/newsletter/")
     body += f'''
 <section class="section">
@@ -1452,24 +1452,24 @@ def build_newsletter():
     <div>
       <span class="eyebrow">What each issue covers</span>
       <ul class="check-list">
-        <li>SEC and state regulatory developments affecting private funds and advisers</li>
-        <li>Alternative investment and fund formation trends</li>
-        <li>EB-5 program updates and transactional guidance</li>
-        <li>Family office and private capital market developments</li>
-        <li>Practice and operations ideas for securities professionals</li>
+        <li><b>The Signal:</b> a short column on the one pattern worth noticing</li>
+        <li><b>Deal climate:</b> a three-sentence read on financing and deal conditions</li>
+        <li><b>Five that matter:</b> private equity, private credit, EB-5, family office, and regulatory developments, weighted toward Texas and the middle market</li>
+        <li><b>On the calendar:</b> deadlines and decisions in the weeks ahead</li>
+        <li><b>From the practice:</b> new articles, programs, and quick references</li>
       </ul>
       <p class="small muted mt-sm">The newsletter is general information, not legal advice. Subscribing does not create an attorney-client relationship.</p>
     </div>
     <div class="card">
       <span class="eyebrow">Subscribe</span>
-      <h2>One email a week.</h2>
+      <h2>Every other Tuesday.</h2>
       <p>No promotions. Unsubscribe at any time.</p>
       {newsletter_form()}
     </div>
   </div>
 </section>'''
-    page("/newsletter/", "Securities Compliance Weekly",
-         "Securities Compliance Weekly: regulatory developments and market trends for investment advisers, fund managers, and family offices.",
+    page("/newsletter/", "Signal Newsletter",
+         "Signal, from J.T. Barnes & Associates: private capital, read clearly. Every other Tuesday, what changed for fund sponsors, private lenders, EB-5 projects, and family offices, and why it matters.",
          body)
 
 
@@ -1484,7 +1484,7 @@ def build_lab():
       <a class="card" href="/lab/timekeeper/"><span class="status status-live">In use</span><h3>Legal Timekeeper</h3><p>Matter-tagged time capture and reporting designed around how legal work is actually interrupted, resumed, and billed.</p><span class="text-link">Learn more</span></a>
       <a class="card" href="/lab/minder/"><span class="status status-dev">In development</span><h3>Legal Minder</h3><p>Natural-language scheduling that turns &ldquo;call the sponsor Tuesday at two&rdquo; into structured calendar entries for iOS and Outlook.</p><span class="text-link">Learn more</span></a>
       <a class="card" href="/lab/prompt-coach/"><span class="status status-live">In use</span><h3>Legal Prompt Coach</h3><p>A browser extension for Edge and Chrome that scores AI prompts as you type and builds them out into complete, lawyer-grade instructions for Claude, ChatGPT, Copilot, and more.</p><span class="text-link">Learn more</span></a>
-      <a class="card" href="/newsletter/"><span class="status status-live">Weekly</span><h3>Intelligence pipeline</h3><p>An automated feed that gathers, scores, and summarizes regulatory and market news, and powers Securities Compliance Weekly.</p><span class="text-link">See the output</span></a>
+      <a class="card" href="/newsletter/"><span class="status status-live">Daily</span><h3>Intelligence pipeline</h3><p>An automated feed that gathers, scores, and summarizes regulatory and market news, and feeds Signal, the firm newsletter.</p><span class="text-link">See the output</span></a>
     </div>
   </div>
 </section>
@@ -1535,7 +1535,7 @@ def build_lab():
         <div class="mock-row"><div>Sample Fund I, LP: LPA markup<small>Fund Formation</small></div><b>2.6h</b></div>
         <div class="mock-row"><div>Sample Holdings: term sheet review<small>M&amp;A &amp; Structured Finance</small></div><b>1.9h</b></div>
         <div class="mock-row"><div>Sample Regional Center: offering update<small>EB-5 Finance</small></div><b>3.2h</b></div>
-        <div class="mock-row"><div>Newsletter: weekly issue<small>Practice Development</small></div><b>0.8h</b></div>
+        <div class="mock-row"><div>Newsletter: Signal issue<small>Practice Development</small></div><b>0.8h</b></div>
         <div class="mock-total">Today&rsquo;s total <b>8.5h</b></div>
       </div>
     </div>
@@ -1680,7 +1680,7 @@ def build_legal():
     <p>The Legal Timekeeper in the Lab stores time entries in your browser on your own device. If you choose to sign in with a Microsoft account, the app also saves your entries to a private app folder in your own OneDrive (inside the Apps folder) so they stay in sync across your devices. The app asks Microsoft only for permission to read and write that one folder. Sign-in and storage are handled by Microsoft under its own privacy terms. Your entries go directly between your browser and Microsoft; the firm does not receive, store, or have access to them. You can sign out at any time, and you can remove the app&rsquo;s access from your Microsoft account settings.</p>
     <p>Voice entry uses the speech recognition built into your browser. Depending on your browser, the audio may be processed by your browser&rsquo;s provider (for example, Google for Chrome, Microsoft for Edge, or Apple for Safari) under that provider&rsquo;s privacy terms. Typed entry involves no audio at all.</p>
     <h2>Newsletter</h2>
-    <p>You can unsubscribe from Securities Compliance Weekly at any time using the link in any issue or by emailing <a href="mailto:{SITE["email"]}">{SITE["email"]}</a>.</p>
+    <p>You can unsubscribe from Signal at any time using the link in any issue or by emailing <a href="mailto:{SITE["email"]}">{SITE["email"]}</a>.</p>
     <h2>Children</h2>
     <p>This website is intended for adults and is not directed to children under 13.</p>
     <h2>Changes and contact</h2>
