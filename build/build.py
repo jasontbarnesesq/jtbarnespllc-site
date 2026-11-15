@@ -233,16 +233,22 @@ PRACTICE = [
 ]
 
 # ---------------------------------------------------------------------------
-# 3. Insights articles. Add a dict to publish; newest first.
-#    body is HTML. Keep paragraphs in <p> tags; use <h2> for subheads.
+# 3. Insights content. Everything under /insights/ is built from these lists.
+#    ARTICLES  articles, client alerts, and blog posts (newest first). body is HTML:
+#              <p> paragraphs, <h2> subheads. kind is "Article", "Client Alert", or "Commentary".
+#    TALKS     Speaking & CLE programs (below)
+#    SERIES    named collections; an article or program joins one with "series": "<slug>"
+#    TOPICS    the topic tags; practice-area topics share the practice slug
 # ---------------------------------------------------------------------------
 ARTICLES = [
     # {
-    #     "slug": "example-article",
+    #     "slug": "example-article",               # page: /insights/articles/example-article/
     #     "title": "Article title",
     #     "date": "2026-11-03",
-    #     "category": "Private Funds",
-    #     "summary": "One or two sentences for the archive card and search results.",
+    #     "kind": "Article",                       # Article, Client Alert, or Commentary
+    #     "topics": ["fund-formation"],            # one or more TOPICS slugs
+    #     "series": "",                            # optional SERIES slug
+    #     "summary": "One or two sentences for cards and search results.",
     #     "body": "<p>First paragraph.</p><h2>Subhead</h2><p>More text.</p>",
     # },
 ]
@@ -256,82 +262,120 @@ ARTICLES = [
 #   published  False keeps a program off the site (for example, until a co-panelist approves)
 # ---------------------------------------------------------------------------
 TALKS = [
-    {"slug": "2026-11-02-private-market-liquidity", "date": "2026-11-02", "date_label": "November 2, 2026",
+    {"slug": "2026-11-02-private-market-liquidity", "topics": ["private-equity-private-credit", "fund-formation", "capital-markets"], "date": "2026-11-02", "date_label": "November 2, 2026",
      "title": "Private Market Liquidity in 2026",
      "subtitle": "Secondaries, Continuation Vehicles and Tender Offer Strategies",
      "pages": 24, "bytes": 217727, "thumb": (720, 405),
      "quickref": "", "published": True},
-    {"slug": "2026-08-24-securities-issues-in-private-credit", "date": "2026-08-24", "date_label": "August 24, 2026",
+    {"slug": "2026-08-24-securities-issues-in-private-credit", "topics": ["private-equity-private-credit", "fund-formation"], "date": "2026-08-24", "date_label": "August 24, 2026",
      "title": "Securities Issues in Private Credit",
      "subtitle": "The Fastest-Growing Corner of Private Capital",
      "pages": 22, "bytes": 201782, "thumb": (932, 720),
      "quickref": "", "published": True},
-    {"slug": "2026-07-27-enforcement-lessons-for-transactional-lawyers", "date": "2026-07-27", "date_label": "July 27, 2026",
+    {"slug": "2026-07-27-enforcement-lessons-for-transactional-lawyers", "topics": ["enforcement-compliance", "capital-markets"], "date": "2026-07-27", "date_label": "July 27, 2026",
      "title": "Enforcement Lessons for Transactional Lawyers",
      "subtitle": "How Routine Transactions Become Regulatory Investigations",
      "pages": 18, "bytes": 180538, "thumb": (720, 557),
      "quickref": "", "published": True},
-    {"slug": "2026-06-22-the-new-disclosure-landscape", "date": "2026-06-22", "date_label": "June 22, 2026",
+    {"slug": "2026-06-22-the-new-disclosure-landscape", "topics": ["capital-markets", "enforcement-compliance"], "date": "2026-06-22", "date_label": "June 22, 2026",
      "title": "The New Disclosure Landscape",
      "subtitle": "Tariffs, Foreign Capital, CFIUS and Private Offerings",
      "pages": 19, "bytes": 174672, "thumb": (720, 540),
      "quickref": "", "published": True},
-    {"slug": "2026-05-04-before-they-call-you", "date": "2026-05-04", "date_label": "May 4, 2026",
+    {"slug": "2026-05-04-before-they-call-you", "topics": ["enforcement-compliance", "fund-formation"], "date": "2026-05-04", "date_label": "May 4, 2026",
      "title": "Before They Call You",
      "subtitle": "Recordkeeping, Sweep Examinations, and the Case for Self-Reporting",
      "pages": 16, "bytes": 131430, "thumb": (720, 557),
      "quickref": "", "published": True},
-    {"slug": "2026-03-30-finra-under-the-hood", "date": "2026-03-30", "date_label": "March 30, 2026",
+    {"slug": "2026-03-30-finra-under-the-hood", "topics": ["capital-markets", "enforcement-compliance"], "date": "2026-03-30", "date_label": "March 30, 2026",
      "title": "FINRA Under the Hood",
      "subtitle": "Private Placements, Finders, and Alternatives",
      "pages": 15, "bytes": 344392, "thumb": (932, 720),
      "quickref": "", "published": False,
      "note": "Moderated panel with John F. Guild, Bell Nunnally (former FINRA examiner)"},
-    {"slug": "2026-02-securities-compliance-in-ma", "date": "2026-02-01", "date_label": "February 2026",
+    {"slug": "2026-02-securities-compliance-in-ma", "topics": ["ma-structured-finance", "capital-markets"], "date": "2026-02-01", "date_label": "February 2026",
      "title": "Securities Compliance in M&amp;A: A Deal Lawyer&rsquo;s Playbook",
      "subtitle": "Navigating Securities Issues, Rollover Structures, and Seller Wealth Protection",
      "pages": 16, "bytes": 2178397, "thumb": (932, 720),
      "quickref": "", "published": True},
-    {"slug": "2025-11-24-foundations-of-fund-counsel-part-2", "date": "2025-11-24", "date_label": "November 24, 2025",
+    {"slug": "2025-11-24-foundations-of-fund-counsel-part-2", "topics": ["fund-formation", "private-equity-private-credit"], "series": "foundations-of-fund-counsel", "date": "2025-11-24", "date_label": "November 24, 2025",
      "title": "Foundations of Fund Counsel, Part 2",
      "subtitle": "Key Rules and Regulations for Counsel Advising Investment Funds and Advisers",
      "pages": 34, "bytes": 713752, "thumb": (720, 540),
      "quickref": "", "published": True},
-    {"slug": "2025-10-27-foundations-of-fund-counsel-part-1", "date": "2025-10-27", "date_label": "October 27, 2025",
+    {"slug": "2025-10-27-foundations-of-fund-counsel-part-1", "topics": ["fund-formation", "private-equity-private-credit"], "series": "foundations-of-fund-counsel", "date": "2025-10-27", "date_label": "October 27, 2025",
      "title": "Foundations of Fund Counsel, Part 1",
      "subtitle": "Key Rules and Regulations for Counsel Advising Investment Funds and Advisers",
      "pages": 46, "bytes": 930653, "thumb": (720, 540),
      "quickref": "", "published": True},
-    {"slug": "2025-09-29-real-estate-as-a-security", "date": "2025-09-29", "date_label": "September 29, 2025",
+    {"slug": "2025-09-29-real-estate-as-a-security", "topics": ["real-estate", "capital-markets"], "date": "2025-09-29", "date_label": "September 29, 2025",
      "title": "Real Estate as a Security",
      "subtitle": "From the Howey Test to the Advisers Act",
      "pages": 35, "bytes": 149357, "thumb": (720, 540),
      "quickref": "", "published": True},
-    {"slug": "2025-08-25-managing-securities-risks-in-ma", "date": "2025-08-25", "date_label": "August 25, 2025",
+    {"slug": "2025-08-25-managing-securities-risks-in-ma", "topics": ["ma-structured-finance", "capital-markets"], "date": "2025-08-25", "date_label": "August 25, 2025",
      "title": "Managing Securities Risks in M&amp;A Transactions",
      "subtitle": "From Due Diligence to Post-Closing Integration",
      "pages": 25, "bytes": 260998, "thumb": (720, 540),
      "quickref": "", "published": True},
-    {"slug": "2025-06-23-rule-144-and-secondary-markets", "date": "2025-06-23", "date_label": "June 23, 2025",
+    {"slug": "2025-06-23-rule-144-and-secondary-markets", "topics": ["capital-markets"], "date": "2025-06-23", "date_label": "June 23, 2025",
      "title": "From Restriction to Resale",
      "subtitle": "Practical Insights on Rule 144 and Secondary Markets",
      "pages": 26, "bytes": 398977, "thumb": (720, 540),
      "quickref": "", "published": True},
-    {"slug": "2025-05-19-avoiding-pitfalls-in-private-offerings", "date": "2025-05-19", "date_label": "May 19, 2025",
+    {"slug": "2025-05-19-avoiding-pitfalls-in-private-offerings", "topics": ["capital-markets", "enforcement-compliance"], "date": "2025-05-19", "date_label": "May 19, 2025",
      "title": "Avoiding Pitfalls in Private Offerings",
      "subtitle": "",
      "pages": 26, "bytes": 711934, "thumb": (720, 540),
      "quickref": "", "published": True},
-    {"slug": "2025-04-28-securities-compliance-in-eb5-offerings", "date": "2025-04-28", "date_label": "April 28, 2025",
+    {"slug": "2025-04-28-securities-compliance-in-eb5-offerings", "topics": ["eb5", "capital-markets"], "date": "2025-04-28", "date_label": "April 28, 2025",
      "title": "Securities Compliance and the U.S. EB-5 Program",
      "subtitle": "Understanding Best Practices for Stakeholders and Counsel",
      "pages": 35, "bytes": 321290, "thumb": (720, 540),
      "quickref": "", "published": True},
-    {"slug": "2025-01-27-securities-compliance-town-hall", "date": "2025-01-27", "date_label": "January 27, 2025",
+    {"slug": "2025-01-27-securities-compliance-town-hall", "topics": ["enforcement-compliance", "capital-markets"], "date": "2025-01-27", "date_label": "January 27, 2025",
      "title": "Securities Compliance Town Hall",
      "subtitle": "Lessons from 2024 and What to Expect in 2025",
      "pages": 46, "bytes": 533483, "thumb": (720, 540),
      "quickref": "", "published": True},
+]
+
+# Upcoming programs (shown at the top of Speaking & CLE until the date passes). Newest last.
+# {"date": "2027-01-25", "title": "...", "subtitle": "...", "venue": "Dallas Bar Association Securities Section",
+#  "credit": "1.0 hour CLE, including 0.5 ethics", "topics": ["capital-markets"]}
+UPCOMING = []
+
+TOPICS = [
+    # (slug, label, practice-page slug or None)
+    ("fund-formation", "Fund Formation", "fund-formation"),
+    ("private-equity-private-credit", "Private Equity &amp; Private Credit", "private-equity-private-credit"),
+    ("capital-markets", "Capital Markets &amp; Offerings", "capital-markets"),
+    ("family-office", "Family Office", "family-office"),
+    ("eb5", "EB-5 Finance", "eb5"),
+    ("ma-structured-finance", "M&amp;A &amp; Structured Finance", "ma-structured-finance"),
+    ("real-estate", "Real Estate", "real-estate"),
+    ("enforcement-compliance", "Enforcement &amp; Compliance", None),
+    ("practice-of-law", "Practice of Law", None),
+]
+TOPIC = {t[0]: {"slug": t[0], "label": t[1], "practice": t[2]} for t in TOPICS}
+TOPIC_LEDE = {
+    "enforcement-compliance": "SEC, FINRA, and state enforcement trends, examinations, and the compliance practices that keep routine transactions from becoming investigations.",
+    "practice-of-law": "How legal work is organized, priced, and delivered, including the practical use of AI and technology in a transactional practice.",
+}
+
+SERIES = [
+    {"slug": "foundations-of-fund-counsel", "title": "Foundations of Fund Counsel",
+     "status": "Two-part program",
+     "summary": "A two-part Dallas Bar Association Securities Section program on the key rules and regulations for counsel advising investment funds and advisers.",
+     "topics": ["fund-formation", "private-equity-private-credit"]},
+    {"slug": "private-funds-question-by-question", "title": "Private Funds, Question by Question",
+     "status": "In preparation",
+     "summary": "A twice-weekly series working through the questions sponsors and investors actually ask about forming and investing in private funds.",
+     "topics": ["fund-formation", "private-equity-private-credit"]},
+    {"slug": "the-abundance-trap", "title": "The Abundance Trap",
+     "status": "In preparation",
+     "summary": "A long-form essay applying behavioral economics to professional identity and value in the age of AI.",
+     "topics": ["practice-of-law"]},
 ]
 
 # ---------------------------------------------------------------------------
@@ -341,6 +385,10 @@ PAGES = []  # (path, noindex) for sitemap
 
 NAV = [("Practice", "/practice/"), ("Approach", "/approach/"), ("About", "/about/"),
        ("Insights", "/insights/"), ("Contact", "/contact/")]
+INSIGHTS_NAV = [("All insights", "/insights/"), ("Articles", "/insights/articles/"),
+                ("Series", "/insights/series/"), ("Speaking &amp; CLE", "/insights/speaking/"),
+                ("Topics", "/insights/topics/"),
+                ("Newsletter", "/newsletter/")]
 UTIL = [("Newsletter", "/newsletter/"), ("The Lab", "/lab/")]
 
 
@@ -366,7 +414,14 @@ def current(path, href):
 def header(path):
     def cur(h):
         return ' aria-current="page"' if current(path, h) else ""
-    main = "".join(f'<li><a href="{h}"{cur(h)}>{t}</a></li>' for t, h in NAV)
+    def item(t, h):
+        if h != "/insights/":
+            return f'<li><a href="{h}"{cur(h)}>{t}</a></li>'
+        on = current(path, h) or path.startswith("/newsletter/")
+        sub = "".join(f'<li><a href="{sh}">{st}</a></li>' for st, sh in INSIGHTS_NAV[1:])
+        return (f'<li class="has-sub"><a href="{h}"{' aria-current="page"' if on else ""}>{t}</a>'
+                f'<ul class="subnav" aria-label="Insights">{sub}</ul></li>')
+    main = "".join(item(t, h) for t, h in NAV)
     util = "".join(f'<a href="{h}"{cur(h)}>{t}</a>' for t, h in UTIL)
     return f'''<a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
@@ -417,11 +472,18 @@ def footer():
         </ul>
       </div>
       <div>
-        <h4>The Lab</h4>
+        <h4>Insights</h4>
         <ul>
-          <li><a href="/insights/">Insights</a></li>
+          <li><a href="/insights/">All insights</a></li>
+          <li><a href="/insights/articles/">Articles</a></li>
+          <li><a href="/insights/series/">Series</a></li>
           <li><a href="/insights/speaking/">Speaking &amp; CLE</a></li>
           <li><a href="/newsletter/">Securities Compliance Weekly</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>The Lab</h4>
+        <ul>
           <li><a href="/lab/">Practice Tools</a></li>
           <li><a href="/lab/timekeeper/">Legal Timekeeper</a></li>
           <li><a href="/lab/minder/">Legal Minder</a></li>
@@ -795,6 +857,7 @@ def build_practice():
     </aside>
   </div>
 </section>
+{related_insights(p["slug"])}
 {cta_band()}'''
         plain = p["title"].replace("&amp;", "&")
         page(f"/practice/{p['slug']}/", p["title"], f"{plain}: {p['summary'].replace('&amp;', '&')}", body)
@@ -962,37 +1025,88 @@ def build_contact():
          body)
 
 
-def build_insights():
-    if ARTICLES:
-        items = "".join(f'''<a class="card" href="/insights/{a["slug"]}/">
-  <span class="status status-soon">{a["category"]} &middot; {fmt_date(a["date"])}</span>
-  <h3>{a["title"]}</h3><p>{a["summary"]}</p><span class="text-link">Read</span></a>''' for a in ARTICLES)
-        archive = f'<div class="grid-3">{items}</div>'
-    else:
-        archive = '''<div class="grid-3">
-  <div class="card"><span class="status status-dev">In preparation</span><h3>The Abundance Trap</h3><p>A long-form essay applying behavioral economics to professional identity and value in the age of AI.</p></div>
-  <div class="card"><span class="status status-dev">In preparation</span><h3>Private funds, question by question</h3><p>A twice-weekly series working through the questions sponsors and investors actually ask about forming and investing in private funds.</p></div>
-  <a class="card" href="/newsletter/"><span class="status status-live">Weekly</span><h3>Securities Compliance Weekly</h3><p>The week&rsquo;s regulatory developments and market trends for advisers, fund managers, and family offices.</p><span class="text-link">Subscribe</span></a>
-</div>
-<p class="small mt-sm">The first essays publish soon. Subscribe to the newsletter to receive them as they are released.</p>'''
-    body = lab_hero([("Home", "/"), ("Insights", None)], "The Lab &middot; Insights",
-                    "Writing on <em>private capital</em> and practice.",
-                    "Analysis of private funds, securities offerings, family office trends, and the economics of professional work, written from an active transactional practice.")
-    body += f'''
-<section class="section">
-  <div class="wrap">
-    <div class="section-head"><span class="eyebrow">Series &amp; articles</span><h2>Latest writing</h2></div>
-    {archive}
-  </div>
-</section>
-<section class="section section-parchment">
+def build_insights_all():
+    """Insights hub and every page under /insights/, all built from ARTICLES, TALKS, SERIES, TOPICS."""
+    items = insight_items()
+    build_insights_hub(items)
+    build_articles(items)
+    build_series(items)
+    build_speaking()
+    build_topics(items)
+
+
+def insight_items():
+    out = []
+    for a in ARTICLES:
+        out.append({"type": "article", "label": a.get("kind", "Article"), "date": a["date"],
+                    "date_label": fmt_date(a["date"]), "title": a["title"], "summary": a["summary"],
+                    "url": f'/insights/articles/{a["slug"]}/', "pdf": False, "topics": a.get("topics", []),
+                    "series": a.get("series", ""), "thumb": None})
+    for t in TALKS:
+        if not t["published"]:
+            continue
+        out.append({"type": "program", "label": "Program", "date": t["date"], "date_label": t["date_label"],
+                    "title": t["title"], "summary": t["subtitle"],
+                    "url": f'/assets/speaking/{t["slug"]}.pdf', "pdf": True, "topics": t.get("topics", []),
+                    "series": t.get("series", ""),
+                    "thumb": (f'/assets/speaking/{t["slug"]}.webp', *t["thumb"]),
+                    "meta": f'Slides, {t["pages"]} pages'})
+    return sorted(out, key=lambda i: i["date"], reverse=True)
+
+
+def insights_subnav(path):
+    links = "".join(
+        f'<a href="{h}"{" aria-current=\"page\"" if (path == h or (h != "/insights/" and path.startswith(h))) else ""}>{t}</a>'
+        for t, h in INSIGHTS_NAV)
+    return f'<nav class="subnav-bar" aria-label="Insights sections"><div class="wrap">{links}</div></nav>'
+
+
+def topic_tags(topics):
+    if not topics:
+        return ""
+    links = "".join(f'<a href="/insights/topics/{t}/">{TOPIC[t]["label"]}</a>' for t in topics if t in TOPIC)
+    return f'<p class="tags">{links}</p>'
+
+
+def feed(items):
+    rows = []
+    for i in items:
+        pdf = ' <span class="muted">(PDF)</span>' if i["pdf"] else ""
+        summary = f'<p>{i["summary"]}</p>' if i["summary"] else ""
+        rows.append(f'''<li class="feed-item">
+  <p class="feed-meta"><span class="feed-type">{i["label"]}</span><span>{i["date_label"]}</span></p>
+  <h3><a href="{i["url"]}">{i["title"]}</a>{pdf}</h3>
+  {summary}{topic_tags(i["topics"])}
+</li>''')
+    return f'<ul class="feed">{"".join(rows)}</ul>'
+
+
+def series_card(sr, items):
+    parts = [i for i in items if i["series"] == sr["slug"]]
+    status = f'{len(parts)} parts' if parts else sr["status"]
+    cls = "status-live" if parts else "status-dev"
+    return f'''<a class="card" href="/insights/series/{sr["slug"]}/">
+  <span class="status {cls}">{status}</span>
+  <h3>{sr["title"]}</h3><p>{sr["summary"]}</p><span class="text-link">View series</span></a>'''
+
+
+def topic_grid(items):
+    cells = []
+    for slug, label, _ in TOPICS:
+        n = sum(1 for i in items if slug in i["topics"])
+        count = f'{n} item{"s" if n != 1 else ""}' if n else "Coming soon"
+        cells.append(f'<a class="topic-link" href="/insights/topics/{slug}/"><span>{label}</span><span class="muted">{count}</span></a>')
+    return f'<div class="topic-grid">{"".join(cells)}</div>'
+
+
+def subscribe_band():
+    return f'''<section class="section section-parchment">
   <div class="wrap split">
     <div>
-      <span class="eyebrow">Speaking &amp; CLE</span>
-      <h2>Programs for lawyers, advisers, and investors.</h2>
+      <span class="eyebrow">Programs and panels</span>
+      <h2>Bring a program to your group.</h2>
       <p>Jason speaks on private funds, securities offerings, EB-5 finance, and the practical use of technology in legal work, and is active in programming for the Dallas Bar Association Securities Section.</p>
-      <p>To request a program or panel participation, <a href="/contact/">get in touch</a>.</p>
-      <a class="text-link" href="/insights/speaking/">Browse programs and slides</a>
+      <p>To request a program or invite Jason to join a panel, <a href="/contact/">get in touch</a>.</p>
     </div>
     <div>
       <span class="eyebrow">Stay current</span>
@@ -1002,24 +1116,214 @@ def build_insights():
     </div>
   </div>
 </section>'''
+
+
+def build_insights_hub(items):
+    articles = [i for i in items if i["type"] == "article"]
+    programs = [i for i in items if i["type"] == "program"]
+    lead = items[0] if items else None
+    feature = ""
+    if lead:
+        img = ""
+        if lead["thumb"]:
+            src, w, h = lead["thumb"]
+            img = f'<a class="feature-media" href="{lead["url"]}" tabindex="-1" aria-hidden="true"><img src="{src}" width="{w}" height="{h}" alt=""></a>'
+        action = "View the slides (PDF)" if lead["pdf"] else "Read"
+        feature = f'''<section class="section">
+  <div class="wrap">
+    <div class="section-head"><span class="eyebrow">Featured</span><h2>Latest from the practice</h2></div>
+    <article class="feature">
+      {img}
+      <div class="feature-body">
+        <p class="feed-meta"><span class="feed-type">{lead["label"]}</span><span>{lead["date_label"]}</span></p>
+        <h3><a href="{lead["url"]}">{lead["title"]}</a></h3>
+        <p>{lead["summary"]}</p>
+        {topic_tags(lead["topics"])}
+        <a class="text-link" href="{lead["url"]}">{action}</a>
+      </div>
+    </article>
+  </div>
+</section>'''
+    n_art = f'{len(articles)} published' if articles else "First pieces publishing soon"
+    types = f'''<div class="grid-4 type-grid">
+  <a class="card card-top-rule" href="/insights/articles/"><span class="index">{n_art}</span><h3>Articles</h3><p>Articles, client alerts, and commentary on private capital transactions and regulation.</p><span class="text-link">Browse articles</span></a>
+  <a class="card card-top-rule" href="/insights/series/"><span class="index">{len(SERIES)} series</span><h3>Series</h3><p>Multi-part collections, from the Foundations of Fund Counsel program to a question-by-question guide to private funds.</p><span class="text-link">Browse series</span></a>
+  <a class="card card-top-rule" href="/insights/speaking/"><span class="index">{len(programs)} programs</span><h3>Speaking &amp; CLE</h3><p>Slides from Dallas Bar Association Securities Section programs, with quick references to follow.</p><span class="text-link">Browse programs</span></a>
+  <a class="card card-top-rule" href="/newsletter/"><span class="index">Weekly</span><h3>Newsletter</h3><p>Securities Compliance Weekly: the week&rsquo;s regulatory developments for advisers, fund managers, and family offices.</p><span class="text-link">Subscribe</span></a>
+</div>'''
+    body = page_hero([("Home", "/"), ("Insights", None)], "Insights",
+                     "Writing and programs on <em>private capital</em>.",
+                     "Articles, series, and CLE programs on private funds, securities offerings, family offices, EB-5 finance, and the practice of law, from an active transactional practice.")
+    body += insights_subnav("/insights/")
+    body += feature
+    body += f'''
+<section class="section section-stone">
+  <div class="wrap">
+    <div class="section-head"><span class="eyebrow">Browse by type</span><h2>Find what you need</h2></div>
+    {types}
+  </div>
+</section>
+<section class="section" id="topics">
+  <div class="wrap">
+    <div class="section-head"><span class="eyebrow">Browse by topic</span><h2>Topics</h2></div>
+    {topic_grid(items)}
+  </div>
+</section>
+<section class="section section-stone">
+  <div class="wrap">
+    <div class="section-head"><span class="eyebrow">Latest</span><h2>Recent insights</h2></div>
+    {feed(items[1:9])}
+    <p class="mt-sm"><a class="text-link" href="/insights/speaking/">All programs and slides</a></p>
+  </div>
+</section>
+{subscribe_band()}'''
+    ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": "Insights",
+          "url": SITE["url"] + "/insights/", "publisher": {"@id": SITE["url"] + "/#firm"}}
     page("/insights/", "Insights",
-         "Insights from J.T. Barnes & Associates on private funds, securities offerings, family offices, EB-5 finance, and practice in the AI era.",
-         body, zone="lab")
+         "Articles, series, and CLE programs from J.T. Barnes & Associates on private funds, securities offerings, family offices, EB-5 finance, and the practice of law.",
+         body, jsonld=ld)
+
+
+def build_articles(items):
+    articles = [i for i in items if i["type"] == "article"]
+    if articles:
+        listing = feed(articles)
+    else:
+        upcoming = "".join(series_card(sr, items) for sr in SERIES if sr["status"] == "In preparation")
+        listing = f'''<p>The first articles publish soon. Subscribe to <a href="/newsletter/">Securities Compliance Weekly</a> to receive them as they are released.</p>
+<div class="grid-3 mt-sm">{upcoming}</div>'''
+    body = page_hero([("Home", "/"), ("Insights", "/insights/"), ("Articles", None)], "Insights &middot; Articles",
+                     "Articles and <em>alerts</em>.",
+                     "Articles, client alerts, and commentary on private capital transactions, securities regulation, and the practice of law.")
+    body += insights_subnav("/insights/articles/")
+    body += f'''
+<section class="section">
+  <div class="wrap">{listing}</div>
+</section>
+{subscribe_band()}'''
+    page("/insights/articles/", "Articles",
+         "Articles, client alerts, and commentary from J.T. Barnes & Associates on private funds, securities offerings, and private capital.",
+         body)
 
     for a in ARTICLES:
-        d = date.fromisoformat(a["date"])
-        body = lab_hero([("Home", "/"), ("Insights", "/insights/"), (a["category"], None)],
-                        f'{a["category"]} &middot; {fmt_date(a["date"])}', a["title"], a["summary"])
+        crumbs = [("Home", "/"), ("Insights", "/insights/"), ("Articles", "/insights/articles/"), (a.get("kind", "Article"), None)]
+        body = page_hero(crumbs, f'{a.get("kind", "Article")} &middot; {fmt_date(a["date"])}', a["title"], a["summary"])
+        body += insights_subnav("/insights/articles/")
         body += f'''
 <section class="section">
   <div class="wrap"><article class="prose">{a["body"]}
+    {topic_tags(a.get("topics", []))}
     <p class="small muted">This article is general information, not legal advice, and does not create an attorney-client relationship.</p>
   </article></div>
 </section>'''
         ld = {"@context": "https://schema.org", "@type": "Article", "headline": a["title"],
               "datePublished": a["date"], "author": {"@id": SITE["url"] + "/about/#jason"},
               "publisher": {"@id": SITE["url"] + "/#firm"}}
-        page(f"/insights/{a['slug']}/", a["title"], a["summary"], body, zone="lab", jsonld=ld)
+        page(f"/insights/articles/{a['slug']}/", a["title"], a["summary"], body, jsonld=ld)
+
+
+def build_series(items):
+    cards = "".join(series_card(sr, items) for sr in SERIES)
+    body = page_hero([("Home", "/"), ("Insights", "/insights/"), ("Series", None)], "Insights &middot; Series",
+                     "Series and <em>collections</em>.",
+                     "Multi-part programs and writing projects that work through a subject in depth.")
+    body += insights_subnav("/insights/series/")
+    body += f'''
+<section class="section">
+  <div class="wrap"><div class="grid-3">{cards}</div></div>
+</section>
+{subscribe_band()}'''
+    page("/insights/series/", "Series",
+         "Multi-part programs and writing series from J.T. Barnes & Associates on private funds, fund counsel, and the practice of law.",
+         body)
+
+    for sr in SERIES:
+        parts = sorted((i for i in items if i["series"] == sr["slug"]), key=lambda i: i["date"])
+        if parts:
+            content = feed(parts)
+        else:
+            content = f'''<div class="note-box"><strong>{sr["status"]}.</strong> The first installments publish soon. Subscribe to <a href="/newsletter/">Securities Compliance Weekly</a> to receive them as they are released.</div>'''
+        body = page_hero([("Home", "/"), ("Insights", "/insights/"), ("Series", "/insights/series/"), (sr["title"], None)],
+                         f'Series &middot; {sr["status"] if not parts else str(len(parts)) + " parts"}', sr["title"], sr["summary"])
+        body += insights_subnav("/insights/series/")
+        body += f'''
+<section class="section">
+  <div class="wrap">
+    {content}
+    {topic_tags(sr["topics"])}
+  </div>
+</section>
+{subscribe_band()}'''
+        page(f'/insights/series/{sr["slug"]}/', sr["title"], sr["summary"], body)
+
+
+def build_topics(items):
+    body = page_hero([("Home", "/"), ("Insights", "/insights/"), ("Topics", None)], "Insights &middot; Topics",
+                     "Browse by <em>topic</em>.",
+                     "Every article, series, and program, organized by the practice areas and subjects they address.")
+    body += insights_subnav("/insights/topics/")
+    body += f'''
+<section class="section">
+  <div class="wrap">{topic_grid(items)}</div>
+</section>
+{subscribe_band()}'''
+    page("/insights/topics/", "Topics",
+         "Insights from J.T. Barnes & Associates organized by topic: fund formation, private equity and private credit, capital markets, family office, EB-5, M&A, real estate, enforcement, and the practice of law.",
+         body)
+
+    for slug, label, practice in TOPICS:
+        tagged = [i for i in items if slug in i["topics"]]
+        series = [sr for sr in SERIES if slug in sr["topics"]]
+        prac = next((p for p in PRACTICE if p["slug"] == practice), None)
+        lede = prac["summary"] if prac else TOPIC_LEDE.get(slug, "")
+        listing = feed(tagged) if tagged else '<p>New material on this topic is in preparation.</p>'
+        series_html = ""
+        if series:
+            series_html = f'''<div class="section-head mt-sm"><span class="eyebrow">Series</span><h2>Related series</h2></div>
+    <div class="grid-3">{"".join(series_card(sr, items) for sr in series)}</div>'''
+        practice_link = (f'<p class="mt-sm"><a class="text-link" href="/practice/{prac["slug"]}/">About the {prac["nav"].replace("&amp;", "&amp;")} practice</a></p>'
+                         if prac else "")
+        body = page_hero([("Home", "/"), ("Insights", "/insights/"), ("Topics", "/insights/topics/"), (label, None)],
+                         "Insights &middot; Topic", label, lede)
+        body += insights_subnav("/insights/topics/")
+        body += f'''
+<section class="section">
+  <div class="wrap">
+    {listing}
+    {practice_link}
+  </div>
+</section>'''
+        if series_html:
+            body += f'''
+<section class="section section-stone">
+  <div class="wrap">{series_html}</div>
+</section>'''
+        body += subscribe_band()
+        plain = label.replace("&amp;", "&")
+        page(f"/insights/topics/{slug}/", f"{plain} Insights",
+             f"Articles, series, and CLE programs on {plain.lower() if slug != 'eb5' else 'EB-5 finance'} from J.T. Barnes & Associates.",
+             body)
+
+
+def related_insights(practice_slug):
+    """Up to three recent items tagged with a practice area, for the bottom of its practice page."""
+    tagged = [i for i in insight_items() if practice_slug in i["topics"]][:3]
+    if not tagged:
+        return ""
+    cards = []
+    for i in tagged:
+        pdf = " (PDF)" if i["pdf"] else ""
+        cards.append(f'''<a class="card" href="{i["url"]}">
+  <span class="status status-live">{i["label"]} &middot; {i["date_label"]}</span>
+  <h3>{i["title"]}</h3><p>{i["summary"]}</p><span class="text-link">{"View slides" if i["pdf"] else "Read"}{pdf}</span></a>''')
+    label = TOPIC[practice_slug]["label"]
+    return f'''<section class="section section-stone">
+  <div class="wrap">
+    <div class="section-head"><span class="eyebrow">Related insights</span><h2>Recent writing and programs</h2></div>
+    <div class="grid-3">{"".join(cards)}</div>
+    <p class="mt-sm"><a class="text-link" href="/insights/topics/{practice_slug}/">All {label} insights</a></p>
+  </div>
+</section>'''
 
 
 def _filesize(n):
@@ -1042,11 +1346,11 @@ def build_speaking():
         note = f'<p class="talk-note">{t["note"]}</p>' if t.get("note") else ""
         qr = (f'<a class="text-link" href="{t["quickref"]}" download>Quick reference (PDF, 2 pages)</a>'
               if t["quickref"] else "")
-        return f'''<article class="card talk">
+        return f'''<article class="card talk" id="{t["slug"]}">
   <a class="talk-thumb" href="{pdf}" tabindex="-1" aria-hidden="true"><img src="/assets/speaking/{t["slug"]}.webp" width="{w}" height="{h}" alt="" loading="lazy" decoding="async"></a>
   <span class="status status-live">{t["date_label"]}</span>
   <h3>{t["title"]}</h3>
-  {sub}{note}
+  {sub}{note}{topic_tags(t.get("topics", []))}
   <div class="talk-links">
     <a class="text-link" href="{pdf}">Slides <span class="muted">(PDF, {t["pages"]} slides, {_filesize(t["bytes"])})</span></a>
     {qr}
@@ -1061,11 +1365,26 @@ def build_speaking():
   </div>
 </section>''' for i, (y, items) in enumerate(years))
 
-    body = lab_hero([("Home", "/"), ("Insights", "/insights/"), ("Speaking &amp; CLE", None)],
-                    "The Lab &middot; Speaking &amp; CLE",
-                    "Programs for the <em>Securities</em> Section.",
-                    "Slides from Jason&rsquo;s programs for the Dallas Bar Association Securities Section, posted as presented. "
-                    "Two-page quick references for each program are in preparation.")
+    body = page_hero([("Home", "/"), ("Insights", "/insights/"), ("Speaking &amp; CLE", None)],
+                     "Insights &middot; Speaking &amp; CLE",
+                     "Programs for the <em>Securities</em> Section.",
+                     "Slides from Jason&rsquo;s programs for the Dallas Bar Association Securities Section, posted as presented. "
+                     "Two-page quick references for each program are in preparation.")
+    body += insights_subnav("/insights/speaking/")
+    upcoming = [u for u in UPCOMING if u["date"] >= date.today().isoformat()]
+    if upcoming:
+        rows = "".join(f'''<li class="feed-item">
+  <p class="feed-meta"><span class="feed-type">Upcoming</span><span>{fmt_date(u["date"])}</span></p>
+  <h3>{u["title"]}</h3><p>{u.get("subtitle", "")}</p>
+  <p class="small muted">{u.get("venue", "")}{" &middot; " + u["credit"] if u.get("credit") else ""}</p>
+</li>''' for u in upcoming)
+        body += f'''
+<section class="section section-stone">
+  <div class="wrap">
+    <div class="section-head"><span class="eyebrow">Upcoming</span><h2>Upcoming programs</h2></div>
+    <ul class="feed">{rows}</ul>
+  </div>
+</section>'''
     body += sections
     body += f'''
 <section class="section section-tight">
@@ -1089,13 +1408,14 @@ def build_speaking():
                        "author": {"@id": SITE["url"] + "/about/#jason"}} for t in talks]}
     page("/insights/speaking/", "Speaking & CLE",
          "Slides from Jason T. Barnes's Dallas Bar Association Securities Section programs on private offerings, M&A, private funds, private credit, EB-5, and enforcement.",
-         body, zone="lab", jsonld=ld)
+         body, jsonld=ld)
 
 
 def build_newsletter():
-    body = lab_hero([("Home", "/"), ("Newsletter", None)], "The Lab &middot; Newsletter",
-                    "Securities <em>Compliance</em> Weekly",
-                    "Regulatory developments, market trends, and practical guidance for investment advisers, fund managers, and family offices. Written from an active securities practice, not a content desk.")
+    body = page_hero([("Home", "/"), ("Insights", "/insights/"), ("Newsletter", None)], "Insights &middot; Newsletter",
+                     "Securities <em>Compliance</em> Weekly",
+                     "Regulatory developments, market trends, and practical guidance for investment advisers, fund managers, and family offices. Written from an active securities practice, not a content desk.")
+    body += insights_subnav("/newsletter/")
     body += f'''
 <section class="section">
   <div class="wrap split">
@@ -1120,7 +1440,7 @@ def build_newsletter():
 </section>'''
     page("/newsletter/", "Securities Compliance Weekly",
          "Securities Compliance Weekly: regulatory developments and market trends for investment advisers, fund managers, and family offices.",
-         body, zone="lab")
+         body)
 
 
 def build_lab():
@@ -1394,8 +1714,7 @@ if __name__ == "__main__":
     build_approach()
     build_about()
     build_contact()
-    build_insights()
-    build_speaking()
+    build_insights_all()
     build_newsletter()
     build_lab()
     build_legal()
