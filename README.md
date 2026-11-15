@@ -77,3 +77,9 @@ cd docs && python3 -m http.server 8000
 Follow `JTB_PLLC_Website_Launch_Workbook.xlsx` (Launch Plan tab), which covers DNS, GitHub Pages, the jasontbarnes.com redirect, compliance review, and QA.
 
 Contact: Jason T. Barnes, jtbarnes@jtbarnespllc.com, +1.469.304.6366
+
+## Insights content
+
+- Articles: add an entry to `ARTICLES` in `build/build.py` and put the body HTML in `content/articles/<slug>.html`.
+- Quick references: write the two-page body in `content/quickrefs/<talk-slug>.html`, run `python build/quickrefs.py <talk-slug>` (needs Playwright with Chrome, and pikepdf), then set that talk's `quickref` in `TALKS`.
+- Rebuild with `python build/build.py`.
