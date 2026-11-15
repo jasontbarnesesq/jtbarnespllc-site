@@ -247,6 +247,93 @@ ARTICLES = [
     # },
 ]
 
+
+# ---------------------------------------------------------------------------
+# Speaking & CLE: Dallas Bar Association Securities Section programs.
+# Slides live in docs/assets/speaking/<slug>.pdf with a title-slide thumbnail at <slug>.webp.
+# To add a program: drop both files in that folder and add a dict here (newest first).
+#   quickref   path to the two-page quick reference PDF once it exists ("" hides the link)
+#   published  False keeps a program off the site (for example, until a co-panelist approves)
+# ---------------------------------------------------------------------------
+TALKS = [
+    {"slug": "2026-11-02-private-market-liquidity", "date": "2026-11-02", "date_label": "November 2, 2026",
+     "title": "Private Market Liquidity in 2026",
+     "subtitle": "Secondaries, Continuation Vehicles and Tender Offer Strategies",
+     "pages": 24, "bytes": 217727, "thumb": (720, 405),
+     "quickref": "", "published": True},
+    {"slug": "2026-08-24-securities-issues-in-private-credit", "date": "2026-08-24", "date_label": "August 24, 2026",
+     "title": "Securities Issues in Private Credit",
+     "subtitle": "The Fastest-Growing Corner of Private Capital",
+     "pages": 22, "bytes": 201782, "thumb": (932, 720),
+     "quickref": "", "published": True},
+    {"slug": "2026-07-27-enforcement-lessons-for-transactional-lawyers", "date": "2026-07-27", "date_label": "July 27, 2026",
+     "title": "Enforcement Lessons for Transactional Lawyers",
+     "subtitle": "How Routine Transactions Become Regulatory Investigations",
+     "pages": 18, "bytes": 180538, "thumb": (720, 557),
+     "quickref": "", "published": True},
+    {"slug": "2026-06-22-the-new-disclosure-landscape", "date": "2026-06-22", "date_label": "June 22, 2026",
+     "title": "The New Disclosure Landscape",
+     "subtitle": "Tariffs, Foreign Capital, CFIUS and Private Offerings",
+     "pages": 19, "bytes": 174672, "thumb": (720, 540),
+     "quickref": "", "published": True},
+    {"slug": "2026-05-04-before-they-call-you", "date": "2026-05-04", "date_label": "May 4, 2026",
+     "title": "Before They Call You",
+     "subtitle": "Recordkeeping, Sweep Examinations, and the Case for Self-Reporting",
+     "pages": 16, "bytes": 131430, "thumb": (720, 557),
+     "quickref": "", "published": True},
+    {"slug": "2026-03-30-finra-under-the-hood", "date": "2026-03-30", "date_label": "March 30, 2026",
+     "title": "FINRA Under the Hood",
+     "subtitle": "Private Placements, Finders, and Alternatives",
+     "pages": 15, "bytes": 344392, "thumb": (932, 720),
+     "quickref": "", "published": False,
+     "note": "Moderated panel with John F. Guild, Bell Nunnally (former FINRA examiner)"},
+    {"slug": "2026-02-securities-compliance-in-ma", "date": "2026-02-01", "date_label": "February 2026",
+     "title": "Securities Compliance in M&amp;A: A Deal Lawyer&rsquo;s Playbook",
+     "subtitle": "Navigating Securities Issues, Rollover Structures, and Seller Wealth Protection",
+     "pages": 16, "bytes": 2178397, "thumb": (932, 720),
+     "quickref": "", "published": True},
+    {"slug": "2025-11-24-foundations-of-fund-counsel-part-2", "date": "2025-11-24", "date_label": "November 24, 2025",
+     "title": "Foundations of Fund Counsel, Part 2",
+     "subtitle": "Key Rules and Regulations for Counsel Advising Investment Funds and Advisers",
+     "pages": 34, "bytes": 713752, "thumb": (720, 540),
+     "quickref": "", "published": True},
+    {"slug": "2025-10-27-foundations-of-fund-counsel-part-1", "date": "2025-10-27", "date_label": "October 27, 2025",
+     "title": "Foundations of Fund Counsel, Part 1",
+     "subtitle": "Key Rules and Regulations for Counsel Advising Investment Funds and Advisers",
+     "pages": 46, "bytes": 930653, "thumb": (720, 540),
+     "quickref": "", "published": True},
+    {"slug": "2025-09-29-real-estate-as-a-security", "date": "2025-09-29", "date_label": "September 29, 2025",
+     "title": "Real Estate as a Security",
+     "subtitle": "From the Howey Test to the Advisers Act",
+     "pages": 35, "bytes": 149357, "thumb": (720, 540),
+     "quickref": "", "published": True},
+    {"slug": "2025-08-25-managing-securities-risks-in-ma", "date": "2025-08-25", "date_label": "August 25, 2025",
+     "title": "Managing Securities Risks in M&amp;A Transactions",
+     "subtitle": "From Due Diligence to Post-Closing Integration",
+     "pages": 25, "bytes": 260998, "thumb": (720, 540),
+     "quickref": "", "published": True},
+    {"slug": "2025-06-23-rule-144-and-secondary-markets", "date": "2025-06-23", "date_label": "June 23, 2025",
+     "title": "From Restriction to Resale",
+     "subtitle": "Practical Insights on Rule 144 and Secondary Markets",
+     "pages": 26, "bytes": 398977, "thumb": (720, 540),
+     "quickref": "", "published": True},
+    {"slug": "2025-05-19-avoiding-pitfalls-in-private-offerings", "date": "2025-05-19", "date_label": "May 19, 2025",
+     "title": "Avoiding Pitfalls in Private Offerings",
+     "subtitle": "",
+     "pages": 26, "bytes": 711934, "thumb": (720, 540),
+     "quickref": "", "published": True},
+    {"slug": "2025-04-28-securities-compliance-in-eb5-offerings", "date": "2025-04-28", "date_label": "April 28, 2025",
+     "title": "Securities Compliance and the U.S. EB-5 Program",
+     "subtitle": "Understanding Best Practices for Stakeholders and Counsel",
+     "pages": 35, "bytes": 321290, "thumb": (720, 540),
+     "quickref": "", "published": True},
+    {"slug": "2025-01-27-securities-compliance-town-hall", "date": "2025-01-27", "date_label": "January 27, 2025",
+     "title": "Securities Compliance Town Hall",
+     "subtitle": "Lessons from 2024 and What to Expect in 2025",
+     "pages": 46, "bytes": 533483, "thumb": (720, 540),
+     "quickref": "", "published": True},
+]
+
 # ---------------------------------------------------------------------------
 # 4. Layout
 # ---------------------------------------------------------------------------
@@ -333,6 +420,7 @@ def footer():
         <h4>The Lab</h4>
         <ul>
           <li><a href="/insights/">Insights</a></li>
+          <li><a href="/insights/speaking/">Speaking &amp; CLE</a></li>
           <li><a href="/newsletter/">Securities Compliance Weekly</a></li>
           <li><a href="/lab/">Practice Tools</a></li>
           <li><a href="/lab/timekeeper/">Legal Timekeeper</a></li>
@@ -904,6 +992,7 @@ def build_insights():
       <h2>Programs for lawyers, advisers, and investors.</h2>
       <p>Jason speaks on private funds, securities offerings, EB-5 finance, and the practical use of technology in legal work, and is active in programming for the Dallas Bar Association Securities Section.</p>
       <p>To request a program or panel participation, <a href="/contact/">get in touch</a>.</p>
+      <a class="text-link" href="/insights/speaking/">Browse programs and slides</a>
     </div>
     <div>
       <span class="eyebrow">Stay current</span>
@@ -931,6 +1020,76 @@ def build_insights():
               "datePublished": a["date"], "author": {"@id": SITE["url"] + "/about/#jason"},
               "publisher": {"@id": SITE["url"] + "/#firm"}}
         page(f"/insights/{a['slug']}/", a["title"], a["summary"], body, zone="lab", jsonld=ld)
+
+
+def _filesize(n):
+    return f"{n / 1048576:.1f} MB" if n >= 1048576 else f"{round(n / 1024)} KB"
+
+
+def build_speaking():
+    talks = [t for t in TALKS if t["published"]]
+    years = []
+    for t in talks:
+        y = t["date"][:4]
+        if not years or years[-1][0] != y:
+            years.append((y, []))
+        years[-1][1].append(t)
+
+    def card(t):
+        pdf = f'/assets/speaking/{t["slug"]}.pdf'
+        w, h = t["thumb"]
+        sub = f'<p>{t["subtitle"]}</p>' if t["subtitle"] else ""
+        note = f'<p class="talk-note">{t["note"]}</p>' if t.get("note") else ""
+        qr = (f'<a class="text-link" href="{t["quickref"]}" download>Quick reference (PDF, 2 pages)</a>'
+              if t["quickref"] else "")
+        return f'''<article class="card talk">
+  <a class="talk-thumb" href="{pdf}" tabindex="-1" aria-hidden="true"><img src="/assets/speaking/{t["slug"]}.webp" width="{w}" height="{h}" alt="" loading="lazy" decoding="async"></a>
+  <span class="status status-live">{t["date_label"]}</span>
+  <h3>{t["title"]}</h3>
+  {sub}{note}
+  <div class="talk-links">
+    <a class="text-link" href="{pdf}">Slides <span class="muted">(PDF, {t["pages"]} slides, {_filesize(t["bytes"])})</span></a>
+    {qr}
+  </div>
+</article>'''
+
+    sections = "".join(f'''
+<section class="section{" section-parchment" if i % 2 else ""}">
+  <div class="wrap">
+    <div class="section-head"><span class="eyebrow">Dallas Bar Association &middot; Securities Section</span><h2>{y} programs</h2></div>
+    <div class="grid-3 talks">{"".join(card(t) for t in items)}</div>
+  </div>
+</section>''' for i, (y, items) in enumerate(years))
+
+    body = lab_hero([("Home", "/"), ("Insights", "/insights/"), ("Speaking &amp; CLE", None)],
+                    "The Lab &middot; Speaking &amp; CLE",
+                    "Programs for the <em>Securities</em> Section.",
+                    "Slides from Jason&rsquo;s programs for the Dallas Bar Association Securities Section, posted as presented. "
+                    "Two-page quick references for each program are in preparation.")
+    body += sections
+    body += f'''
+<section class="section section-tight">
+  <div class="wrap split">
+    <div>
+      <span class="eyebrow">About these materials</span>
+      <p class="small muted">Slides are posted as presented on the date shown and reflect the law and market practice at that time. Later developments are not reflected. Programs delivered before the founding of {SITE["firm"]} carry the name of Mr. Barnes&rsquo;s prior firm.</p>
+      <p class="small muted">These materials are general information, not legal advice, and do not create an attorney-client relationship.</p>
+    </div>
+    <div>
+      <span class="eyebrow">Programs and panels</span>
+      <p>To request a program for your organization or invite Jason to join a panel, <a href="/contact/">get in touch</a>.</p>
+    </div>
+  </div>
+</section>'''
+    ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": "Speaking & CLE",
+          "url": SITE["url"] + "/insights/speaking/",
+          "hasPart": [{"@type": "PresentationDigitalDocument", "name": t["title"].replace("&rsquo;", "\u2019").replace("&amp;", "&"),
+                       "dateCreated": t["date"], "encodingFormat": "application/pdf",
+                       "url": SITE["url"] + f'/assets/speaking/{t["slug"]}.pdf',
+                       "author": {"@id": SITE["url"] + "/about/#jason"}} for t in talks]}
+    page("/insights/speaking/", "Speaking & CLE",
+         "Slides from Jason T. Barnes's Dallas Bar Association Securities Section programs on private offerings, M&A, private funds, private credit, EB-5, and enforcement.",
+         body, zone="lab", jsonld=ld)
 
 
 def build_newsletter():
@@ -1236,6 +1395,7 @@ if __name__ == "__main__":
     build_about()
     build_contact()
     build_insights()
+    build_speaking()
     build_newsletter()
     build_lab()
     build_legal()
