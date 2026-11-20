@@ -94,8 +94,8 @@
           postForm(CONFIG.newsletterEndpoint, form, status, "Subscribed. Watch your inbox for a confirmation email.");
           return;
         }
-        var subject = "Subscribe: Securities Compliance Weekly";
-        var body = "Please add me to Securities Compliance Weekly.\n\nName: " + val(form, "name") + "\nEmail: " + val(form, "email");
+        var subject = "Subscribe: Signal";
+        var body = "Please add me to Signal.\n\nName: " + val(form, "name") + "\nEmail: " + val(form, "email");
         window.location.href = "mailto:" + CONFIG.firmEmail + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
         status.textContent = "Your email app should open with a subscription request ready to send.";
       });
