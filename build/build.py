@@ -697,24 +697,22 @@ def build_home():
   <p>Most transactions touch several of these areas. Describe yours in general terms and Jason will tell you how he can help.</p>
   <span class="text-link">Start a conversation</span>
 </a>'''
+    practice_index = "".join(f'<li><a href="/practice/{p["slug"]}/">{p["nav"]}</a></li>' for p in PRACTICE)
     body = f'''<section class="hero on-dark">
   <div class="wrap">
     <div>
       <span class="eyebrow">{SITE["firm"]}</span>
       <h1>{closing("Corporate finance and securities counsel for <em>families, funds,</em> and the middle market.")}</h1>
-      <p class="lede">Nearly 30 years structuring, documenting, and negotiating the transactions that connect capital providers with the businesses and sponsors raising it. Institutional-quality work, delivered directly by the attorney you hire.</p>
+      <p class="lede">The firm structures, documents, and negotiates the transactions that connect capital providers with the businesses and sponsors raising it. Institutional-quality work, delivered directly by the attorney you hire.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="{schedule_href()}"{schedule_attrs()}>Schedule a consultation</a>
         <a class="btn btn-ghost" href="/practice/">Practice areas</a>
       </div>
     </div>
-    <div class="hero-card">
-      <img src="/assets/img/jason-barnes-headshot-280.webp" width="280" height="273" alt="Jason T. Barnes">
-      <div>
-        <div class="name">{SITE["attorney"]}</div>
-        <div class="title">{SITE["title"]}</div>
-      </div>
-    </div>
+    <nav class="hero-index" aria-label="Practice areas">
+      <span class="hero-index-label">Practice</span>
+      <ul>{practice_index}</ul>
+    </nav>
   </div>
 </section>
 
@@ -754,7 +752,23 @@ def build_home():
   </div>
 </section>
 
-<section class="section section-stone">
+<section class="section section-stone leader">
+  <div class="wrap leader-grid">
+    <figure class="leader-photo">
+      <img src="/assets/img/jason-barnes-headshot.webp" width="540" height="526" alt="Portrait of Jason T. Barnes" loading="lazy">
+      <figcaption><strong>{SITE["attorney"]}</strong><span>{SITE["title"]}</span></figcaption>
+    </figure>
+    <div>
+      <span class="eyebrow">Leadership</span>
+      <h2>Counsel to every side of the capital table.</h2>
+      <p class="lede">{SITE["attorney"]} leads the firm, drawing on nearly 30 years representing capital providers, investors, and those raising capital.</p>
+      <p>His work includes members of the Forbes Global 50, some of the world&rsquo;s largest banks and financial institutions, private and public investment funds, and families, on transactions inside and outside the United States. He has served as a principal of registered investment advisers and, for nearly two decades, as transactional and securities counsel in the U.S. EB-5 program.</p>
+      <a class="text-link" href="/about/">About Jason</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Approach</span>
