@@ -40,7 +40,7 @@ SITE = {
     "locality": "Dallas",
     "region": "TX",
     "linkedin": "https://www.linkedin.com/in/jasontbarnes/",        # Jason's profile (About page)
-    "firm_linkedin": "",                                            # the firm's company page (footer)
+    "firm_linkedin": "https://www.linkedin.com/company/jtbarnespllc/",                                            # the firm's company page (footer)
     "timekeeper_url": "/lab/timekeeper/app/",
     # Optional booking link (Calendly, Microsoft Bookings, etc.). Blank = route to /contact/
     "scheduling_url": "",

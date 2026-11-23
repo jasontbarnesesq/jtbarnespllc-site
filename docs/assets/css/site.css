@@ -375,16 +375,15 @@ a.card-cta:hover { border-color: var(--night); border-top-color: var(--copper); 
 /* ---------- Footer ---------- */
 .site-footer { background: var(--night); color: var(--paper-muted); font-size: .9rem; border-top: 1px solid var(--night-rule); }
 .wrap-footer { max-width: 1440px; }
-/* Six columns: brand (about a quarter) plus five link columns. A heading row with a hairline
-   beneath it runs across all six; hairlines separate the columns. */
+/* Six columns: brand (about a quarter) plus five link columns, with the logo in the heading row.
+   No rules between columns or rows; one hairline above the legal line. */
 .footer-grid { display: grid; grid-template-columns: 340px 220fr 200fr 164fr 176fr 231fr; border-bottom: 1px solid var(--night-rule); }
-.fcol { border-left: 1px solid var(--night-rule); min-width: 0; }
-.fcol-brand { border-left: 0; }
-.site-footer .fhead { height: 96px; display: flex; align-items: center; margin: 0; padding: 0 20px; border-bottom: 1px solid var(--night-rule);
+.fcol { min-width: 0; }
+.site-footer .fhead { height: 96px; display: flex; align-items: center; margin: 0; padding: 0 20px;
   color: var(--paper); font-size: .8rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
 .fcol-brand .fhead { padding-left: 0; }
 .fhead img { width: 150px; height: auto; }
-.fbody { padding: 22px 20px 40px; margin: 0; }
+.fbody { padding: 6px 20px 44px; margin: 0; }
 .fcol-brand .fbody { padding-left: 0; }
 .fbody p { margin: 0 0 8px; }
 .fcol-brand .fbody p { color: var(--paper); }
@@ -540,11 +539,9 @@ a.card-cta:hover { border-color: var(--night); border-top-color: var(--copper); 
 /* Footer: narrower screens */
 @media (max-width: 1439px) {
   .footer-grid { grid-template-columns: repeat(5, 1fr); }
-  .fcol-brand { grid-column: 1 / -1; display: flex; align-items: center; gap: 32px; border-bottom: 1px solid var(--night-rule); }
-  .fcol-brand .fhead { border-bottom: 0; }
+  .fcol-brand { grid-column: 1 / -1; display: flex; align-items: center; gap: 32px; padding-bottom: 8px; }
   .fcol-brand .fbody { padding: 0; display: flex; flex-wrap: wrap; gap: 4px 24px; }
   .fcol-brand .fbody p { margin: 0; }
-  .fcol:nth-child(2) { border-left: 0; }
   .fcol:nth-child(2) .fhead, .fcol:nth-child(2) .fbody { padding-left: 0; }
   .site-footer .fhead { height: 64px; }
 }
@@ -553,7 +550,6 @@ a.card-cta:hover { border-color: var(--night); border-top-color: var(--copper); 
   .fcol-brand { display: block; padding: 8px 0 20px; }
   .fcol-brand .fbody { display: block; }
   .fcol-brand .fbody p { margin: 0 0 6px; }
-  .fcol { border-left: 0; }
   .fcol .fhead, .fcol .fbody { padding-left: 0; }
   .site-footer .fhead { height: auto; padding-top: 22px; padding-bottom: 12px; }
   .fbody { padding-top: 14px; padding-bottom: 24px; }
