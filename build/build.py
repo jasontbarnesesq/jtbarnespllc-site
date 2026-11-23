@@ -34,11 +34,13 @@ SITE = {
     "office_tel": "+14693046366",
     "mobile_phone": "+1.214.450.4400",
     "mobile_tel": "+12144504400",
-    "email": "jtbarnes@jtbarnespllc.com",
+    "email": "info@jtbarnespllc.com",            # firm inbox: footer, contact page, forms, notices
+    "direct_email": "jtbarnes@jtbarnespllc.com",   # Jason directly: About page and contact card only
     "city": "Dallas, Texas",
     "locality": "Dallas",
     "region": "TX",
-    "linkedin": "https://www.linkedin.com/in/jasontbarnes/",
+    "linkedin": "https://www.linkedin.com/in/jasontbarnes/",        # Jason's profile (About page)
+    "firm_linkedin": "",                                            # the firm's company page (footer)
     "timekeeper_url": "/lab/timekeeper/app/",
     # Optional booking link (Calendly, Microsoft Bookings, etc.). Blank = route to /contact/
     "scheduling_url": "",
@@ -455,7 +457,7 @@ def header(path):
     <div class="wrap">
       <a class="brand" href="/" aria-label="{SITE["firm"]}, home">
         <img src="/assets/img/brand/barnes-logo-primary.svg" width="136" height="37" alt="Barnes">
-        <span class="brand-name">J.T. Barnes<br>&amp; Associates, PLLC</span>
+        <span class="brand-name">J.T. Barnes &amp; Associates, PLLC</span>
       </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
       <nav class="primary-nav" id="primary-nav" aria-label="Primary">
@@ -470,30 +472,32 @@ def header(path):
 def footer():
     practice_links = "".join(f'<li><a href="/practice/{p["slug"]}/">{p["nav"]}</a></li>' for p in PRACTICE)
     return f'''<footer class="site-footer">
-  <div class="wrap">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <img src="/assets/img/brand/barnes-logo-reversed.svg" width="150" height="41" alt="Barnes">
-        <p><strong>{SITE["firm"]}</strong></p>
-        <p>Institutional-quality counsel for private capital.</p>
-        <p>{SITE["city"]}</p>
+  <div class="wrap wrap-footer">
+    <div class="footer-grid">
+      <div class="fcol fcol-brand">
+        <div class="fhead"><img src="/assets/img/brand/barnes-logo-reversed.svg" width="150" height="41" alt="Barnes"></div>
+        <div class="fbody">
+          <p class="firm"><strong>{SITE["firm"]}</strong></p>
+          <p>Institutional-quality counsel for private capital.</p>
+          <p>{SITE["city"]}</p>
+        </div>
       </div>
-      <div>
-        <h4>Practice</h4>
-        <ul>{practice_links}</ul>
+      <div class="fcol">
+        <h4 class="fhead">Practice</h4>
+        <ul class="fbody">{practice_links}</ul>
       </div>
-      <div>
-        <h4>Firm</h4>
-        <ul>
+      <div class="fcol">
+        <h4 class="fhead">Firm</h4>
+        <ul class="fbody">
           <li><a href="/approach/">Approach</a></li>
           <li><a href="/about/">About Jason</a></li>
           <li><a href="/contact/">Contact</a></li>
           <li><a href="{schedule_href()}"{schedule_attrs()}>Schedule a consultation</a></li>
         </ul>
       </div>
-      <div>
-        <h4>Insights</h4>
-        <ul>
+      <div class="fcol">
+        <h4 class="fhead">Insights</h4>
+        <ul class="fbody">
           <li><a href="/insights/">All insights</a></li>
           <li><a href="/insights/articles/">Articles</a></li>
           <li><a href="/insights/series/">Series</a></li>
@@ -501,22 +505,21 @@ def footer():
           <li><a href="/newsletter/">Signal (newsletter)</a></li>
         </ul>
       </div>
-      <div>
-        <h4>The Lab</h4>
-        <ul>
+      <div class="fcol">
+        <h4 class="fhead">The Lab</h4>
+        <ul class="fbody">
           <li><a href="/lab/">Practice Tools</a></li>
           <li><a href="/lab/timekeeper/">Legal Timekeeper</a></li>
           <li><a href="/lab/minder/">Legal Minder</a></li>
           <li><a href="/lab/prompt-coach/">Legal Prompt Coach</a></li>
         </ul>
       </div>
-      <div>
-        <h4>Contact</h4>
-        <ul>
-          <li><a href="tel:{SITE["office_tel"]}">Office {SITE["office_phone"]}</a></li>
-          <li><a href="tel:{SITE["mobile_tel"]}">Mobile {SITE["mobile_phone"]}</a></li>
-          <li><a href="mailto:{SITE["email"]}">{SITE["email"]}</a></li>
-          <li><a href="{SITE["linkedin"]}" rel="noopener">LinkedIn</a></li>
+      <div class="fcol fcol-contact">
+        <h4 class="fhead">Contact</h4>
+        <ul class="fbody">
+          <li><span class="k-label">Main:</span> <a href="tel:{SITE["office_tel"]}">{SITE["office_phone"]}</a></li>
+          <li><span class="k-label">Email:</span> <a href="mailto:{SITE["email"]}">{SITE["email"]}</a></li>
+          {f'<li><a class="ul" href="{SITE["firm_linkedin"]}" rel="noopener">LinkedIn</a></li>' if SITE["firm_linkedin"] else ""}
         </ul>
       </div>
     </div>
@@ -571,10 +574,26 @@ def head(path, title, description, noindex=False, jsonld=None):
 </head>'''
 
 
+FIRM_NBSP = "J.T.\u00a0Barnes\u00a0&amp;\u00a0Associates,\u00a0PLLC"
+
+
+def keep_firm_name_together(html):
+    """Join the words of the firm name with non-breaking spaces so it never wraps mid-name
+    (for example, "PLLC" alone on the next line). Links (href) are left untouched."""
+    import re
+    parts = re.split(r'(href="[^"]*")', html)
+    out = []
+    for part in parts:
+        if not part.startswith('href="'):
+            part = part.replace("J.T. Barnes &amp; Associates, PLLC", FIRM_NBSP).replace("J.T. Barnes & Associates, PLLC", FIRM_NBSP)
+        out.append(part)
+    return "".join(out)
+
+
 def page(path, title, description, body, zone="firm", noindex=False, jsonld=None):
-    html = (head(path, title, description, noindex, jsonld)
-            + f'\n<body class="zone-{zone}">\n' + header(path)
-            + f'\n<main id="main">\n{body}\n</main>\n' + footer() + "\n</body>\n</html>\n")
+    page_body = (f'\n<body class="zone-{zone}">\n' + header(path)
+                 + f'\n<main id="main">\n{body}\n</main>\n' + footer() + "\n</body>\n</html>\n")
+    html = head(path, title, description, noindex, jsonld) + keep_firm_name_together(page_body)
     rel = path.strip("/")
     target = os.path.join(OUT, rel, "index.html") if rel else os.path.join(OUT, "index.html")
     if path == "/404.html":
@@ -683,7 +702,7 @@ ORG_LD = {
     "knowsAbout": ["Securities law", "Private fund formation", "Private equity", "Private credit", "Private placements",
                    "Family office structuring", "EB-5 finance", "Mergers and acquisitions", "Real estate joint ventures"],
     "founder": {"@id": SITE["url"] + "/about/#jason"},
-    "sameAs": [SITE["linkedin"]],
+    "sameAs": [u for u in [SITE["firm_linkedin"]] if u],
 }
 PERSON_LD = {
     "@context": "https://schema.org",
@@ -696,6 +715,8 @@ PERSON_LD = {
     "alumniOf": [{"@type": "CollegeOrUniversity", "name": "Emory University School of Law"},
                  {"@type": "CollegeOrUniversity", "name": "Georgia Institute of Technology"}],
     "knowsAbout": ORG_LD["knowsAbout"],
+    "email": SITE["direct_email"],
+    "telephone": SITE["office_phone"].replace(".", "-"),
     "sameAs": [SITE["linkedin"]],
 }
 
@@ -878,7 +899,7 @@ def build_practice():
     <aside>
       <div class="aside-card on-dark">
         <span class="eyebrow">Discuss a matter</span>
-        <h3>Talk with Jason directly.</h3>
+        <h3>Start a conversation.</h3>
         <p>Initial conversations are confidential. Please share only general information until a conflicts check is complete.</p>
         <p class="contact-line"><a href="tel:{SITE["office_tel"]}">{SITE["office_phone"]}</a></p>
         <p class="contact-line"><a href="mailto:{SITE["email"]}">{SITE["email"]}</a></p>
@@ -959,6 +980,48 @@ def build_approach():
          body)
 
 
+ABOUT_LEDE = 'Jason advises high-net-worth individuals, family offices, family-owned businesses, and private and public institutions on alternative investments, capital finance, and mergers and acquisitions.'
+ABOUT_BIO = [
+    'For nearly 30 years he has represented capital providers, investors, and those raising capital, which gives him an unusual view of the motivations and needs of every stakeholder across the full life cycle of an investment or a company. His technical work centers on structuring, documenting, and negotiating transactions across borders, both physical and figurative, linking capital with the people and projects that need it, from early-stage ventures to multi-lateral family offices.',
+    'His experience includes work with members of the Forbes Global 50, some of the world&rsquo;s largest banks and financial institutions, private and public investment funds, investment managers and advisers, and high-net-worth individuals, on transactions inside and outside the United States. He has also served as a principal of registered investment advisers, giving him the client&rsquo;s view of the regulatory obligations he advises on.',
+    'For nearly two decades he has served as transactional and securities counsel in the U.S. EB-5 program, coordinating developers, regional centers, immigration counsel, and investors around the world.',
+    'Although deeply experienced with institutional capital, Jason focuses his practice on delivering institutional-quality solutions to families, middle-market businesses, and emerging sponsors. He leads ' + SITE['firm'] + ', returning to independent practice after serving as a Shareholder at Munsch Hardt Kopf &amp; Harr, P.C. in Dallas.',
+]
+
+
+def build_vcard():
+    """Jason's contact card, downloadable from the About page (vCard 3.0, with photo)."""
+    import base64, io
+    from PIL import Image
+    im = Image.open(os.path.join(ROOT, "docs", "assets", "img", "jason-barnes-headshot.webp")).convert("RGB")
+    im.thumbnail((240, 240))
+    buf = io.BytesIO(); im.save(buf, "JPEG", quality=82)
+    photo = base64.b64encode(buf.getvalue()).decode()
+    def fold(line):  # RFC 6350 line folding at 75 octets
+        out = [line[:75]]; line = line[75:]
+        while line:
+            out.append(" " + line[:74]); line = line[74:]
+        return "\r\n".join(out)
+    lines = [
+        "BEGIN:VCARD", "VERSION:3.0",
+        "N:Barnes;Jason;T.;;", "FN:Jason T. Barnes",
+        "ORG:J.T. Barnes & Associates\\, PLLC", "TITLE:Managing Partner",
+        f"EMAIL;TYPE=INTERNET,WORK,PREF:{SITE['direct_email']}",
+        f"TEL;TYPE=WORK,VOICE:{SITE['office_tel']}",
+        f"TEL;TYPE=CELL,VOICE:{SITE['mobile_tel']}",
+        f"ADR;TYPE=WORK:;;;{SITE['locality']};{SITE['region']};;United States",
+        f"URL;TYPE=WORK:{SITE['url']}/",
+        f"X-SOCIALPROFILE;TYPE=linkedin:{SITE['linkedin']}",
+        f"PHOTO;ENCODING=b;TYPE=JPEG:{photo}",
+        f"REV:{date.today().isoformat()}",
+        "END:VCARD",
+    ]
+    path = os.path.join(OUT, "assets", "files", "jason-t-barnes.vcf")
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8", newline="") as f:
+        f.write("\r\n".join(fold(l) for l in lines) + "\r\n")
+
+
 def build_about():
     body = page_hero([("Home", "/"), ("About", None)], "About",
                      "Jason T. Barnes", f"{SITE['title']}, {SITE['firm']}")
@@ -967,6 +1030,19 @@ def build_about():
   <div class="wrap bio-grid">
     <div class="bio-photo">
       <img src="/assets/img/jason-barnes-headshot.webp" width="540" height="526" alt="Portrait of Jason T. Barnes">
+      <div class="direct">
+        <span class="eyebrow">Contact Jason directly</span>
+        <dl>
+          <dt>Email</dt><dd><a href="mailto:{SITE["direct_email"]}">{SITE["direct_email"]}</a></dd>
+          <dt>Office</dt><dd><a href="tel:{SITE["office_tel"]}">{SITE["office_phone"]}</a></dd>
+          <dt>Mobile</dt><dd><a href="tel:{SITE["mobile_tel"]}">{SITE["mobile_phone"]}</a></dd>
+          <dt>LinkedIn</dt><dd><a href="{SITE["linkedin"]}" rel="noopener">linkedin.com/in/jasontbarnes</a></dd>
+        </dl>
+        <div class="direct-actions">
+          <a class="btn btn-outline" href="/assets/files/jason-t-barnes.vcf" download>Save contact card (.vcf)</a>
+          <a class="btn btn-outline" href="/assets/files/jason-t-barnes-bio.pdf" download>Download bio (PDF)</a>
+        </div>
+      </div>
       <dl class="facts">
         <dt>Education</dt>
         <dd>J.D., Emory University School of Law</dd>
@@ -982,11 +1058,8 @@ def build_about():
     <div>
       <span class="eyebrow">Biography</span>
       <h2>Counsel to every side of the capital table.</h2>
-      <p class="lede">Jason advises high-net-worth individuals, family offices, family-owned businesses, and private and public institutions on alternative investments, capital finance, and mergers and acquisitions.</p>
-      <p>For nearly 30 years he has represented capital providers, investors, and those raising capital, which gives him an unusual view of the motivations and needs of every stakeholder across the full life cycle of an investment or a company. His technical work centers on structuring, documenting, and negotiating transactions across borders, both physical and figurative, linking capital with the people and projects that need it, from early-stage ventures to multi-lateral family offices.</p>
-      <p>His experience includes work with members of the Forbes Global 50, some of the world&rsquo;s largest banks and financial institutions, private and public investment funds, investment managers and advisers, and high-net-worth individuals, on transactions inside and outside the United States. He has also served as a principal of registered investment advisers, giving him the client&rsquo;s view of the regulatory obligations he advises on.</p>
-      <p>For nearly two decades he has served as transactional and securities counsel in the U.S. EB-5 program, coordinating developers, regional centers, immigration counsel, and investors around the world.</p>
-      <p>Although deeply experienced with institutional capital, Jason focuses his practice on delivering institutional-quality solutions to families, middle-market businesses, and emerging sponsors. He leads {SITE["firm"]}, returning to independent practice after serving as a Shareholder at Munsch Hardt Kopf &amp; Harr, P.C. in Dallas.</p>
+      <p class="lede">{ABOUT_LEDE}</p>
+      {"".join(f"<p>{x}</p>" for x in ABOUT_BIO)}
       <h3>Beyond the practice</h3>
       <p>Jason works on a pro bono basis to educate the investment community about investing in underserved and emerging markets, with a focus on double-bottom-line and impact-oriented strategies. He speaks and writes regularly on private funds, securities offerings, and the practical use of technology in legal work, and he builds the practice tools shared in <a href="/lab/">the Lab</a>.</p>
     </div>
@@ -1045,8 +1118,7 @@ def build_contact():
     </div>
     <aside class="contact-card">
       <dl>
-        <dt>Office</dt><dd><a href="tel:{SITE["office_tel"]}">{SITE["office_phone"]}</a></dd>
-        <dt>Mobile</dt><dd><a href="tel:{SITE["mobile_tel"]}">{SITE["mobile_phone"]}</a></dd>
+        <dt>Main</dt><dd><a href="tel:{SITE["office_tel"]}">{SITE["office_phone"]}</a></dd>
         <dt>Email</dt><dd><a href="mailto:{SITE["email"]}">{SITE["email"]}</a></dd>
         <dt>Location</dt><dd>{SITE["city"]}<br><span class="small muted">Meetings in person, by phone, or by video.</span></dd>
       </dl>
@@ -1756,6 +1828,7 @@ if __name__ == "__main__":
     build_home()
     build_practice()
     build_approach()
+    build_vcard()
     build_about()
     build_contact()
     build_insights_all()
