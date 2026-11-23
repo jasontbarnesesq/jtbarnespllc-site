@@ -8,7 +8,7 @@
      Leave an endpoint blank ("") to fall back to a pre-filled email.
      ------------------------------------------------------------------ */
   var CONFIG = {
-    firmEmail: "jtbarnes@jtbarnespllc.com",
+    firmEmail: "info@jtbarnespllc.com",
     // Optional: a form service URL (Formspree, Jotform, Basin, etc.) that accepts POST.
     contactEndpoint: "",
     // Optional: newsletter provider signup URL that accepts POST (Buttondown, Mailchimp, etc.).
