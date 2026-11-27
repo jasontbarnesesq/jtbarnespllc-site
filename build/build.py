@@ -661,7 +661,7 @@ def stats_block(extra_class=""):
 
 
 def cta_band(h2="Discuss a transaction or offering.",
-             p="Start with a confidential conversation about where you are and what you need."):
+             p="Start with a conversation about where you are and what you need. After a quick conflicts check, it stays confidential."):
     return f'''<section class="cta-band on-dark">
   <div class="wrap">
     <div>
@@ -900,7 +900,7 @@ def build_practice():
       <div class="aside-card on-dark">
         <span class="eyebrow">Discuss a matter</span>
         <h3>Start a conversation.</h3>
-        <p>Initial conversations are confidential. Please share only general information until a conflicts check is complete.</p>
+        <p>After a quick conflicts check, your first conversation with Jason stays confidential, even if you do not hire the firm. Until then, please share only general information and the names of the other parties.</p>
         <p class="contact-line"><a href="tel:{SITE["office_tel"]}">{SITE["office_phone"]}</a></p>
         <p class="contact-line"><a href="mailto:{SITE["email"]}">{SITE["email"]}</a></p>
         <a class="btn btn-primary" href="{schedule_href()}"{schedule_attrs()}>Schedule a consultation</a>
@@ -930,7 +930,7 @@ def build_approach():
       <h2>From first call to closing.</h2>
     </div>
     <div class="steps">
-      <div class="step"><h3>Initial conversation</h3><p>A confidential call to understand the transaction, the parties, and the timeline. We run a conflicts check before you share details.</p></div>
+      <div class="step"><h3>Initial conversation</h3><p>We start with a conflicts check, then a confidential call to understand the transaction, the parties, and the timeline. Until the check is done, we ask only for the parties&rsquo; names and a general description.</p></div>
       <div class="step"><h3>Scope and fee proposal</h3><p>A written engagement letter describing the work, the deliverables, and the fee arrangement: fixed, phased, or hourly, depending on the matter.</p></div>
       <div class="step"><h3>Execution</h3><p>Jason leads the work directly and coordinates with your accountants, administrators, co-counsel, and the other side&rsquo;s advisors.</p></div>
       <div class="step"><h3>Closing and handoff</h3><p>Organized closing sets, clear post-closing obligations, and calendared deadlines so nothing is missed after signing.</p></div>
@@ -976,7 +976,7 @@ def build_approach():
 </section>
 {cta_band()}'''
     page("/approach/", "Approach",
-         "How engagements with J.T. Barnes & Associates work: confidential first conversation, written scope and fees, direct partner involvement, and technology-enabled delivery.",
+         "How engagements with J.T. Barnes & Associates work: a conflicts check and a confidential first conversation, written scope and fees, direct partner involvement, and technology-enabled delivery.",
          body)
 
 
@@ -1071,7 +1071,7 @@ def build_about():
     {stats_block()}
   </div>
 </section>
-{cta_band("Work with Jason.", "Start with a confidential conversation about your transaction, fund, or family office.")}'''
+{cta_band("Work with Jason.", "Start with a conversation about your transaction, fund, or family office. After a quick conflicts check, it stays confidential.")}'''
     page("/about/", "About Jason T. Barnes",
          "Jason T. Barnes, Managing Partner of J.T. Barnes & Associates, PLLC: nearly 30 years advising family offices, funds, and middle-market businesses on securities, fund formation, EB-5, and M&A.",
          body, jsonld=PERSON_LD)
@@ -1083,8 +1083,8 @@ def build_contact():
     if SITE["scheduling_url"]:
         sched = f'<p><a class="btn btn-primary" href="{SITE["scheduling_url"]}" target="_blank" rel="noopener">Book a time online</a></p>'
     body = page_hero([("Home", "/"), ("Contact", None)], "Contact",
-                     "Start a confidential conversation.",
-                     "Tell us a little about your matter and how to reach you. Jason responds personally.")
+                     "Start a conversation.",
+                     "Tell us a little about your matter and how to reach you. Jason responds personally, after a quick conflicts check.")
     body += f'''
 <section class="section">
   <div class="wrap split-wide split">
@@ -1109,9 +1109,9 @@ def build_contact():
         <div>
           <label for="c-msg">How can we help?</label>
           <textarea id="c-msg" name="message" required></textarea>
-          <p class="hint">Please describe your matter in general terms and include the names of the other parties involved so we can check for conflicts. Do not send confidential information until we confirm we can represent you.</p>
+          <p class="hint">Describe your matter in general terms and name the other parties involved so we can check for conflicts. Please leave out sensitive details for now. Jason will ask for them once conflicts are cleared.</p>
         </div>
-        <label class="check"><input type="checkbox" name="ack" required> I understand that submitting this form does not create an attorney-client relationship and that information I send before an engagement is confirmed may not be treated as confidential.</label>
+        <label class="check"><input type="checkbox" name="ack" required> I understand that sending this form does not make J.T. Barnes &amp; Associates my lawyers. The firm will keep what I send private as the Texas lawyer rules require, but until it confirms in writing that it can represent me, what I send will not prevent it from representing someone else, even in the same matter.</label>
         <div><button class="btn btn-primary" type="submit">Send inquiry</button></div>
         <p id="contact-status" class="form-status" role="status" aria-live="polite"></p>
       </form>
@@ -1731,7 +1731,7 @@ def build_legal():
 
     <h2 id="no-relationship">No attorney-client relationship</h2>
     <p>Visiting this website, sending an email, completing the contact form, subscribing to the newsletter, or using any tool in the Lab does not create an attorney-client relationship. A relationship is formed only when the firm agrees to represent you in a signed engagement letter, after a conflicts check.</p>
-    <p>Please do not send confidential or time-sensitive information until the firm has confirmed in writing that it can represent you. Information sent before then may not be treated as privileged or confidential.</p>
+    <p>Until the firm confirms in writing that it can represent you, please send only general information and the names of the other parties. The firm keeps information from people seeking to hire it private as the Texas lawyer rules require. Information sent before that confirmation will not prevent the firm from representing another party, and it may not be protected by the attorney-client privilege. Do not rely on the firm to act on any deadline before you are a client.</p>
 
     <h2 id="results">Prior results and experience</h2>
     <p>Descriptions of experience, including transaction counts, countries, and years in practice, summarize Mr. Barnes&rsquo;s career, including work performed at prior firms. Every matter is different. Prior results do not guarantee a similar outcome.</p>
